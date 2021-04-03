@@ -1,4 +1,7 @@
+using Application.Core.Interfaces;
+using Application.Parks;
 using Infrastucture.Persistence;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,6 +42,9 @@ namespace Parkedex
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Parkedex", Version = "v1" });
             });
+
+            services.AddMediatR(typeof(GetAll.Handler).Assembly);
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
