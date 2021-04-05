@@ -1,4 +1,5 @@
 using Application.Core.Interfaces;
+using Application.Core.Mappings;
 using Application.Parks;
 using Infrastucture.Persistence;
 using MediatR;
@@ -44,6 +45,7 @@ namespace Parkedex
             });
 
             services.AddMediatR(typeof(GetAll.Handler).Assembly);
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         }
 
