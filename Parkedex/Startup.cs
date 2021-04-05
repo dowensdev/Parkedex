@@ -1,3 +1,4 @@
+using API.Extensions;
 using Application.Core.Interfaces;
 using Application.Core.Mappings;
 using Application.Parks;
@@ -32,21 +33,8 @@ namespace Parkedex
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                Configuration.GetConnectionString("DefaultConnection")
-                )
-            );
-
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Parkedex", Version = "v1" });
-            });
-
-            services.AddMediatR(typeof(GetAll.Handler).Assembly);
-            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            services.AddAppServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
