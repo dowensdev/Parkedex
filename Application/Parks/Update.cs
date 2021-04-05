@@ -1,6 +1,7 @@
 ﻿using Application.Core.Interfaces;
 using AutoMapper;
 using Domain;
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,14 @@ namespace Application.Parks
         public class Command : IRequest
         {
             public Park Park { get; set; }
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Park).SetValidator(new ParkValidator());
+            }
         }
 
         public class Handler : IRequestHandler<Command>
