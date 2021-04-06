@@ -14,6 +14,7 @@ namespace Domain
         public string Caption { get; set; }
         public string AltText { get; set; }
         public string URL { get; set; }
+        public string ParkCode { get; set; }
 
         //Add code for Park relationship
     }

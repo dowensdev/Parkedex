@@ -8,6 +8,7 @@ namespace Application.Core.Mappings
         public MappingProfiles()
         {
             CreateMap<Park, Park>();
+            CreateMap<ImageReference, ImageReference>();
         }
     }
 }
