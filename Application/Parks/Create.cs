@@ -1,4 +1,5 @@
-﻿using Application.Core.Interfaces;
+﻿using Application.Core;
+using Application.Core.Interfaces;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -9,7 +10,7 @@ namespace Application.Parks
 {
     public class Create
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public Park Park { get; set; }
         }
@@ -22,7 +23,7 @@ namespace Application.Parks
             }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly IApplicationDbContext _db;
             public Handler(IApplicationDbContext db)
@@ -30,12 +31,13 @@ namespace Application.Parks
                 _db = db;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 _db.Parks.Add(request.Park);
-                await _db.SaveChangesAsync();
 
-                return Unit.Value;   
+                var result = await _db.SaveChangesAsync() > 0;
+                if (!result) return Result<Unit>.Failure("Failed to create Park");
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }

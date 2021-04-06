@@ -1,4 +1,5 @@
-﻿using Application.Core.Interfaces;
+﻿using Application.Core;
+using Application.Core.Interfaces;
 using AutoMapper;
 using Domain;
 using FluentValidation;
@@ -14,7 +15,7 @@ namespace Application.Parks
 {
     public class Update
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public Park Park { get; set; }
         }
@@ -27,7 +28,7 @@ namespace Application.Parks
             }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly IApplicationDbContext _db;
             private readonly IMapper _mapper;
@@ -37,14 +38,16 @@ namespace Application.Parks
                 _mapper = mapper;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var park = await _db.Parks.FindAsync(request.Park.Id);
+                if (park == null) return null;
 
                 _mapper.Map(request.Park, park);
 
-                await _db.SaveChangesAsync();
-                return Unit.Value;
+                var result = await _db.SaveChangesAsync() > 0;
+                if (!result) return Result<Unit>.Failure("Failed to update Park");
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }

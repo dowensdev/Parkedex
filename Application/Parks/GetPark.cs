@@ -1,4 +1,5 @@
-﻿using Application.Core.Interfaces;
+﻿using Application.Core;
+using Application.Core.Interfaces;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +11,12 @@ namespace Application.Parks
 {
     public class GetPark
     {
-        public class Query : IRequest<Park> 
+        public class Query : IRequest<Result<Park>> 
         {
             public string ParkCode { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Park>
+        public class Handler : IRequestHandler<Query, Result<Park>>
         {
             private readonly IApplicationDbContext _db;
             public Handler(IApplicationDbContext db)
@@ -23,9 +24,10 @@ namespace Application.Parks
                 _db = db;
             }
 
-            public async Task<Park> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Park>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _db.Parks.FirstOrDefaultAsync(x => x.ParkCode == request.ParkCode);
+                var park = await _db.Parks.FirstOrDefaultAsync(x => x.ParkCode == request.ParkCode);
+                return Result<Park>.Success(park);
             }
         }
     }

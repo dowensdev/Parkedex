@@ -1,4 +1,5 @@
-﻿using Application.Core.Interfaces;
+﻿using Application.Core;
+using Application.Core.Interfaces;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +14,9 @@ namespace Application.Parks
 {
     public class GetAll
     {
-        public class Query : IRequest<List<Park>> {}
+        public class Query : IRequest<Result<List<Park>>> {}
 
-        public class Handler : IRequestHandler<Query, List<Park>>
+        public class Handler : IRequestHandler<Query, Result<List<Park>>>
         {
             private readonly IApplicationDbContext _db;
             public Handler(IApplicationDbContext db)
@@ -23,9 +24,9 @@ namespace Application.Parks
                 _db = db;
             }
 
-            public async Task<List<Park>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<Park>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _db.Parks.ToListAsync();
+                return Result<List<Park>>.Success( await _db.Parks.ToListAsync());
             }
         }
     }
