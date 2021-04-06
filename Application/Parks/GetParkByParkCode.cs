@@ -2,20 +2,18 @@
 using Application.Core.Interfaces;
 using Domain;
 using MediatR;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Parks
 {
-    public class GetPark
+    public class GetParkByParkCode
     {
-        public class Query : IRequest<Result<Park>>
+        public class Query : IRequest<Result<Park>> 
         {
-            public Guid Id { get; set; }
+            public string ParkCode { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Result<Park>>
@@ -28,7 +26,7 @@ namespace Application.Parks
 
             public async Task<Result<Park>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var park = await _db.Parks.FindAsync(request.Id);
+                var park = await _db.Parks.FirstOrDefaultAsync(x => x.ParkCode == request.ParkCode);
                 return Result<Park>.Success(park);
             }
         }

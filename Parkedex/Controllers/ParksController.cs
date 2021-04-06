@@ -16,10 +16,16 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new GetAll.Query { }));
         }
 
-        [HttpGet("{parkCode}")]
-        public async Task<IActionResult> GetPark(string parkCode)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPark(Guid id)
         {
-            return HandleResult( await Mediator.Send(new GetPark.Query { ParkCode = parkCode }));
+            return HandleResult(await Mediator.Send(new GetPark.Query { Id = id }));
+        }
+
+        [HttpGet("[action]/{parkCode}")]
+        public async Task<IActionResult> GetParkByParkCode(string parkCode)
+        {
+            return HandleResult( await Mediator.Send(new GetParkByParkCode.Query { ParkCode = parkCode }));
         }
 
         [HttpPost]
