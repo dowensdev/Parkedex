@@ -31,6 +31,7 @@ namespace Infrastucture.Persistence
             modelBuilder.Entity<Park>()
             .HasMany(i => i.Images)
             .WithOne(p => p.Park)
+            .HasPrincipalKey(p => p.ParkCode)
             .HasForeignKey(p => p.ParkCode)
             .OnDelete(DeleteBehavior.Cascade);
         }
