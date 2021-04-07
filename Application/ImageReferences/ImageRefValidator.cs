@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.ImageReferences
 {
-    class ImageRefValidator : AbstractValidator<ImageReference>
+    public class ImageRefValidator : AbstractValidator<ImageReference>
     {
         public ImageRefValidator()
         {
