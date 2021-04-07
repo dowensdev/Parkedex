@@ -17,6 +17,6 @@ namespace Domain
         public string LatLong { get; set; }
 
         //Add image reference one to many list
-
+        public ICollection<ImageReference> Images { get; set; } = new List<ImageReference>();
     }
 }

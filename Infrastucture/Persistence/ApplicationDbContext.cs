@@ -25,5 +25,14 @@ namespace Infrastucture.Persistence
         {
             return await base.SaveChangesAsync();
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Park>()
+            .HasMany(i => i.Images)
+            .WithOne(p => p.Park)
+            .HasForeignKey(p => p.ParkCode)
+            .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }
