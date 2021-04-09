@@ -26,7 +26,14 @@ namespace Application.Parks
 
             public async Task<Result<List<Park>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return Result<List<Park>>.Success( await _db.Parks.ToListAsync());
+                var parks = await _db.Parks.ToListAsync();
+
+                foreach(Park park in parks)
+                {
+                    park.Images = await _db.ImageReferences.Where(x => x.ParkCode == park.ParkCode).ToListAsync();
+                }
+
+                return Result<List<Park>>.Success(parks);
             }
         }
     }
