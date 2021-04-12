@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import ParkDashboard from '../../features/parks/dashboard/ParkDashboard';
 import NavBar from './NavBar';
@@ -10,7 +11,7 @@ function App() {
     <>
       <NavBar />
       <Container style={{marginTop: '7em'}}>
-        <ParkDashboard />
+        <Route path='/' component={ParkDashboard} />
       </Container>
           
     </>
