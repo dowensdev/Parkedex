@@ -1,11 +1,16 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { Card, Icon, Image } from 'semantic-ui-react';
+import { Button, Card, Image } from 'semantic-ui-react';
 import { Park } from '../../../app/models/park';
+import { useStore } from '../../../app/stores/store';
 
 interface Props {
     park: Park
 }
-export default function ParkListItem({park}: Props) {
+
+export default observer(function ParkListItem({park}: Props) {
+    const {parkStore} = useStore();
+    const {setVisitedPark} = parkStore;
     
     return (
         <Card fluid>
@@ -25,8 +30,8 @@ export default function ParkListItem({park}: Props) {
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>
-                    <Icon link name='check' size='large' style={{float:'right'}}/>
+                    <Button onClick={() => setVisitedPark(park)} icon='check'style={{float:'right', background:'#5C9980'}} />
             </Card.Content>
         </Card>
     )
-}
+})

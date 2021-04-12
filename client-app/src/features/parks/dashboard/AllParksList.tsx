@@ -1,19 +1,19 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { List } from 'semantic-ui-react';
-import { Park } from '../../../app/models/park';
+import { useStore } from '../../../app/stores/store';
 import ParkListItem from './ParkListItem';
 
-interface Props {
-    parks: Park[]
-}
 
-export default function AllParksList({parks}: Props) {
+export default observer(function AllParksList() {
+    const {parkStore} = useStore();
+    const {allParkList} = parkStore;
     
     return (
         <List style={{marginLeft:10}}>
-            {parks.map(park => (
+            {allParkList.map(park => (
                 <ParkListItem key={park.id} park={park}/>
             ))}
         </List>
     )
-}
+})

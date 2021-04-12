@@ -1,25 +1,25 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Header, List } from 'semantic-ui-react';
-import { Park } from '../../../app/models/park';
+import { useStore } from '../../../app/stores/store';
 
-interface Props {
-    parks: Park[],
-}
 
-export default function VisitedParksList({parks}: Props) {
-    let noVisited = false;
+export default observer(function VisitedParksList() {
+    const {parkStore} = useStore();
+    const {visitedParkList} = parkStore;
 
     return (
         <>
-            {noVisited ? <Header content='You have not visited any parks' /> :
-            <List style={{marginLeft:10}}>
-                {parks.map(park => (
-                    <List.Item>
-                        {park.fullName}
-                    </List.Item>
-                ))}
-            </List>
+            {visitedParkList.length > 0 ? 
+                <List style={{marginLeft:10}}>
+                    {visitedParkList.map(park => (
+                        <List.Item>
+                            {park.fullName}
+                        </List.Item>
+                    ))}
+                </List> :
+                <Header content='You have not visited any parks' />
             }
         </>
     )
-}
+})
