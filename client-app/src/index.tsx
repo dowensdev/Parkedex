@@ -4,15 +4,18 @@ import 'semantic-ui-css/semantic.min.css';
 import './app/layout/styles.css';
 import App from './app/layout/App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { store, StoreContext } from './app/stores/store';
+import {createBrowserHistory} from 'history';
+
+export const history = createBrowserHistory();
 
 ReactDOM.render(
   <React.StrictMode>
     <StoreContext.Provider value={store}>
-      <BrowserRouter>
+      <Router history={history}>
         <App />
-      </BrowserRouter>
+      </Router>
     </StoreContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -50,11 +50,13 @@ namespace API.Controllers
         {
             if(await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
-                return BadRequest("Email taken. Please use a different email or login with the account for this email.");
+                ModelState.AddModelError("email", "Email taken. Please use a different email or login with the account for this email.");
+                return ValidationProblem();
             }
             if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
             {
-                return BadRequest("Username taken. Please try a different username.");
+                ModelState.AddModelError("username", "Username taken. Please try a different username.");
+                return ValidationProblem();
             }
 
             var user = new AppUser()

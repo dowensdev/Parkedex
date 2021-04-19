@@ -1,9 +1,8 @@
 body {
-  background: #1f4037;  /* old browsers */
-  background: -webkit-linear-gradient(to right, #1f4037, #99f2c8);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #1f4037, #99f2c8);
+  background: #5C9980;
 }
 
+/* NavBar styles */
 .ui.top.fixed.menu {
   background: #1f4037;  /* old browsers */
   background: -webkit-linear-gradient(to right, #1f4037, #99f2c8);  /* Chrome 10-25, Safari 5.1-6 */
@@ -11,14 +10,22 @@ body {
 
 }
 
-/* Park Card Styles */
+.ui.borderless.menu {
+  background: #5C9980;
+}
+
+.ui.menu .item {
+  color: #EAEAEA;
+}
+
+/* Park Card styles */
 .ui.card {
   background: #5C9980;
 }
 
 .ui.card > .content > .header, 
 .ui.card > .content > .description {
-  color: white;
+  color: #EAEAEA;
 }
 
 .ui.card > .image {

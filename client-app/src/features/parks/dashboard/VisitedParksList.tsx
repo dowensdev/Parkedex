@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { Header, List } from 'semantic-ui-react';
+import { Header, Menu } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 
 
@@ -11,13 +11,13 @@ export default observer(function VisitedParksList() {
     return (
         <>
             {visitedParkList.length > 0 ? 
-                <List style={{marginLeft:10}}>
+                <Menu style={{marginLeft:10}} vertical borderless>
                     {visitedParkList.map(park => (
-                        <List.Item>
+                        <Menu.Item>
                             {park.fullName}
-                        </List.Item>
+                        </Menu.Item>
                     ))}
-                </List> :
+                </Menu> :
                 <Header content='You have not visited any parks' />
             }
         </>
