@@ -16,6 +16,7 @@ namespace Infrastucture.Persistence
 
         public DbSet<Park> Parks { get; set; }
         public DbSet<ImageReference> ImageReferences { get; set; }
+        public DbSet<VisitedPark> VisitedParks { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {
@@ -26,12 +27,24 @@ namespace Infrastucture.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
+            //One to Many relationship between Parks and ImageReferences
             modelBuilder.Entity<Park>()
             .HasMany(i => i.Images)
             .WithOne()
             .HasPrincipalKey(p => p.ParkCode).IsRequired()
             .HasForeignKey(p => p.ParkCode)
             .OnDelete(DeleteBehavior.Cascade);
+
+            //Many to many relationship between Parks and AppUsers
+            modelBuilder.Entity<VisitedPark>(x => x.HasKey(vp => new { vp.AppUserId, vp.ParkId }));
+            modelBuilder.Entity<VisitedPark>()
+                .HasOne(u => u.AppUser)
+                .WithMany(p => p.ParksVisited)
+                .HasForeignKey(vp => vp.AppUserId);
+            modelBuilder.Entity<VisitedPark>()
+                .HasOne(p => p.Park)
+                .WithMany(u => u.Visitors)
+                .HasForeignKey(vp => vp.ParkId);
         }
     }
 }

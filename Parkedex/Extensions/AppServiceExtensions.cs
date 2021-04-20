@@ -2,6 +2,7 @@
 using Application.Core.Mappings;
 using Application.Parks;
 using Infrastucture.Persistence;
+using Infrastucture.Security;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +33,7 @@ namespace API.Extensions
             services.AddMediatR(typeof(GetAll.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            services.AddScoped<IUserAccessor, UserAccessor>();
 
             return services;
         }

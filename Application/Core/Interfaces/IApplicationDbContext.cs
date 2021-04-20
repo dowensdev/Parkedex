@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,6 +15,7 @@ namespace Application.Core.Interfaces
     {
         DbSet<Park> Parks { get; set; }
         DbSet<ImageReference> ImageReferences { get; set; }
+        DbSet<AppUser> Users { get; set; }
         Task<int> SaveChangesAsync();
     }
 }
