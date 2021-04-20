@@ -1,6 +1,7 @@
 ﻿using Application.Parks;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace API.Controllers
 {
     public class ParksController : BaseAppController
     {
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllParks()
         {

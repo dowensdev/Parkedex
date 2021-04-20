@@ -1,0 +1,33 @@
+body {
+  background: #5C9980;
+}
+
+/* NavBar styles */
+.ui.top.fixed.menu {
+  background: #1f4037;  /* old browsers */
+  background: -webkit-linear-gradient(to right, #1f4037, #99f2c8);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #1f4037, #99f2c8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.ui.borderless.menu {
+  background: #5C9980;
+}
+
+.ui.menu .item {
+  color: #EAEAEA;
+}
+
+/* Park Card styles */
+.ui.card {
+  background: #5C9980;
+}
+
+.ui.card > .content > .header, 
+.ui.card > .content > .description {
+  color: #EAEAEA;
+}
+
+.ui.card > .image {
+  max-height:425px;
+}

@@ -1,17 +1,13 @@
 ﻿using Application.Core.Interfaces;
 using Domain;
-using MediatR;
+using Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Infrastucture.Persistence
 {
-    public class ApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -20,6 +16,7 @@ namespace Infrastucture.Persistence
 
         public DbSet<Park> Parks { get; set; }
         public DbSet<ImageReference> ImageReferences { get; set; }
+        public DbSet<VisitedPark> VisitedParks { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {
@@ -28,12 +25,26 @@ namespace Infrastucture.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            //One to Many relationship between Parks and ImageReferences
             modelBuilder.Entity<Park>()
             .HasMany(i => i.Images)
             .WithOne()
             .HasPrincipalKey(p => p.ParkCode).IsRequired()
             .HasForeignKey(p => p.ParkCode)
             .OnDelete(DeleteBehavior.Cascade);
+
+            //Many to many relationship between Parks and AppUsers
+            modelBuilder.Entity<VisitedPark>(x => x.HasKey(vp => new { vp.AppUserId, vp.ParkId }));
+            modelBuilder.Entity<VisitedPark>()
+                .HasOne(u => u.AppUser)
+                .WithMany(p => p.ParksVisited)
+                .HasForeignKey(vp => vp.AppUserId);
+            modelBuilder.Entity<VisitedPark>()
+                .HasOne(p => p.Park)
+                .WithMany(u => u.Visitors)
+                .HasForeignKey(vp => vp.ParkId);
         }
     }
 }
