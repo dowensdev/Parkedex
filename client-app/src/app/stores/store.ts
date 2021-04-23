@@ -15,7 +15,7 @@ export const store: Store = {
     commonStore: new CommonStore(),
     parkStore: new ParkStore(),
     userStore: new UserStore(),
-    modalStore: new ModalStore()
+    modalStore: new ModalStore(),
 }
 
 export const StoreContext = createContext(store);

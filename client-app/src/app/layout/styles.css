@@ -14,8 +14,8 @@ body {
   background: #5C9980;
 }
 
-.ui.menu .item {
-  color: #EAEAEA;
+.ui.segment {
+  background:#EAEAEA;
 }
 
 /* Park Card styles */
@@ -30,4 +30,9 @@ body {
 
 .ui.card > .image {
   max-height:425px;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
 }

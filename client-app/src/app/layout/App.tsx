@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import ParkDashboard from '../../features/parks/dashboard/ParkDashboard';
+import ParkDetails from '../../features/parks/details/ParkDetails';
 import LoginForm from '../../features/users/LoginForm';
 import ModalContainer from '../common/modals/ModalContainer';
 import { useStore } from '../stores/store';
@@ -26,12 +27,19 @@ function App() {
   return (
     <>
     <ModalContainer />
-      <NavBar />
-      <Container style={{marginTop: '7em'}}>
-        <Route path='/parks' component={ParkDashboard} />
-        <Route path='/login' component={LoginForm}/>
-      </Container>
-          
+      <Route
+        path={'/(.+)'}
+        render={() => (
+          <>
+            <NavBar />
+            <Container style={{marginTop: '7em'}}>
+              <Route exact path='/parks' component={ParkDashboard} />
+              <Route path='/parks/:id' component={ParkDetails} />
+              <Route path='/login' component={LoginForm}/>
+            </Container>
+          </>
+        )}
+      />
     </>
   );
 }

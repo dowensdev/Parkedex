@@ -64,7 +64,8 @@ const requests = {
 }
 
 const Parks = {
-    getAll: () => requests.get<Park[]>('/parks')
+    getAll: () => requests.get<Park[]>('/parks'),
+    get: (id: string) => requests.get<Park>(`/parks/${id}`)
 }
 
 const Users = {

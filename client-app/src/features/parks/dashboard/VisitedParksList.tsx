@@ -12,13 +12,14 @@ export default observer(function VisitedParksList() {
         <>
             {visitedParkList.length > 0 ? 
                 <Menu style={{marginLeft:10}} vertical borderless>
+                    <Header content='Your Parks' textAlign='center' style={{color:'white'}}/>
                     {visitedParkList.map(park => (
                         <Menu.Item>
                             {park.fullName}
                         </Menu.Item>
                     ))}
                 </Menu> :
-                <Header content='You have not visited any parks' />
+                <Header content='You have not visited any parks' textAlign='center'/>
             }
         </>
     )
