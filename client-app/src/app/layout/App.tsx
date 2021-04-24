@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import ParkDashboard from '../../features/parks/dashboard/ParkDashboard';
 import ParkDetails from '../../features/parks/details/ParkDetails';
+import SplashPage from '../../features/splash/SplashPage';
 import LoginForm from '../../features/users/LoginForm';
 import ModalContainer from '../common/modals/ModalContainer';
 import { useStore } from '../stores/store';
@@ -27,6 +28,7 @@ function App() {
   return (
     <>
     <ModalContainer />
+    <Route exact path='/' component={SplashPage} />
       <Route
         path={'/(.+)'}
         render={() => (

@@ -10,8 +10,8 @@ interface Props {
 }
 
 export default observer(function ParkListItem({park}: Props) {
-    const {parkStore} = useStore();
-    const {setVisitedPark} = parkStore;
+    const {userStore} = useStore();
+    const {addVisitedPark, hasVisited, removeVisitedPark} = userStore;
     
     return (
         <Segment.Group>
@@ -39,7 +39,12 @@ export default observer(function ParkListItem({park}: Props) {
                 <Container>Longitude: {park.latLong.split(",")[1].split(":")[1]}</Container>
             </Segment>  
             <Segment clearing>
-                <Button onClick={() => setVisitedPark(park)} icon='check'style={{float:'right', background:'#5C9980'}} floated='right' />
+                {hasVisited(park.id) ? (
+                        <Button onClick={() => removeVisitedPark(park)} icon='check' style={{float:'right', background:'#5C9980', color: 'green'}} />
+                    ) : (
+                        <Button onClick={() => addVisitedPark(park)} icon='check' style={{float:'right', background:'#5C9980', color: 'red'}} />
+                    )
+                }
             </Segment>
         </Segment.Group>
     )

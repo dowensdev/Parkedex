@@ -17,7 +17,7 @@ namespace Application.UserParks
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public string ParkCode { get; set; }
+            public Guid Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
@@ -35,7 +35,7 @@ namespace Application.UserParks
                 var user = await _db.Users.FirstOrDefaultAsync(x =>
                     x.UserName == _userAccessor.GetUsername());
 
-                var park = await _db.Parks.FirstOrDefaultAsync(x => x.ParkCode == request.ParkCode);
+                var park = await _db.Parks.FirstOrDefaultAsync(x => x.Id == request.Id);
 
                 var visitedPark = new VisitedPark
                 {

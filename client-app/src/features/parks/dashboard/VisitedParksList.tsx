@@ -1,21 +1,22 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Header, Menu } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 
 
 export default observer(function VisitedParksList() {
-    const {parkStore} = useStore();
-    const {visitedParkList} = parkStore;
+    const {userStore} = useStore();
+    const {allVisited} = userStore;
 
     return (
         <>
-            {visitedParkList.length > 0 ? 
+            {allVisited.length > 0 ? 
                 <Menu style={{marginLeft:10}} vertical borderless>
-                    <Header content='Your Parks' textAlign='center' style={{color:'white'}}/>
-                    {visitedParkList.map(park => (
-                        <Menu.Item>
-                            {park.fullName}
+                    <Header content='Your Parks' textAlign='center' style={{marginTop:10}}/>
+                    {allVisited.map((park) => (
+                        <Menu.Item as={Link} to={`/parks/${park[0]}`}>
+                            {park[1]}
                         </Menu.Item>
                     ))}
                 </Menu> :
