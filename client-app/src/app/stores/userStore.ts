@@ -9,6 +9,7 @@ export default class UserStore {
     user: User | null = null;
     visitedParksMap = new Map<string, string>();
     loadingVisitedList: boolean = false;
+    loadingButtons: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -60,10 +61,10 @@ export default class UserStore {
     }
 
     get allVisited() {
-        return Array.from(this.visitedParksMap);
+        return Array.from(this.visitedParksMap).sort((a, b) => a[1].localeCompare(b[1]));
     }
 
-    hasVisited = async (id: string) => {
+    hasVisited = (id: string) => {
         return this.visitedParksMap.size > 0 ? this.visitedParksMap.has(id) : false;
     }
 
@@ -83,29 +84,36 @@ export default class UserStore {
                 this.setLoadingVisited(false);
             }
         }
+        this.setLoadingVisited(false);
     }
 
     addVisitedPark = async (park: Park) => {
+        this.loadingButtons = true;
         if(this.user && !this.hasVisited(park.id)) {
             try {
                 await agent.VisitedParks.addVisited(park.id)
                 runInAction(() => {
                     this.visitedParksMap.set(park.id, park.fullName);
+                    this.loadingButtons = false;
                 })
             } catch(error) {
                 console.log(error);
+                this.loadingButtons = false;
             }
         }
     }
 
     removeVisitedPark = async (park: Park) => {
+        this.loadingButtons = true;
         try {
             await agent.VisitedParks.removeVisited(park.id)
             runInAction(() => {
                 this.visitedParksMap.delete(park.id);
+                this.loadingButtons = false;
             })
         } catch(error) {
             console.log(error);
+            this.loadingButtons = false;
         }
     }
 

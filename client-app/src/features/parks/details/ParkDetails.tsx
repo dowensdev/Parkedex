@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Item, Image, Button, Segment, Container, Grid } from 'semantic-ui-react';
+import { useParams } from 'react-router-dom';
+import { Grid } from 'semantic-ui-react';
 import LoaderComponent from '../../../app/layout/LoaderComponent';
 import { useStore } from '../../../app/stores/store';
 import ParkListItem from '../dashboard/ParkListItem';
@@ -10,7 +10,7 @@ import VisitedParksList from '../dashboard/VisitedParksList';
 export default observer(function ParkDetails() {
     const {parkStore, userStore} = useStore();
     const {currentPark: park, loadingInitial, loadPark} = parkStore;
-    const {getUser, setVisitedParks, loadingVisitedList} = userStore;
+    const {getUser, setVisitedParks} = userStore;
     const {id} = useParams<{id: string}>();
 
     useEffect(() => {
@@ -26,12 +26,11 @@ export default observer(function ParkDetails() {
     return (
         <Grid>
             <Grid.Column width={10}>
-                <ParkListItem park={park!}/>
+                <ParkListItem park={park}/>
             </Grid.Column>
             <Grid.Column width={6}>
                 <VisitedParksList />
             </Grid.Column>
         </Grid>
-        
     )
 })

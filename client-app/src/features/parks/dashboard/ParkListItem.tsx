@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Item, Image, Button, Segment, Container} from 'semantic-ui-react';
+import { Item, Image, Button, Segment, Container, Label} from 'semantic-ui-react';
 import { Park } from '../../../app/models/park';
 import { useStore } from '../../../app/stores/store';
 
@@ -11,10 +11,15 @@ interface Props {
 
 export default observer(function ParkListItem({park}: Props) {
     const {userStore} = useStore();
-    const {addVisitedPark, hasVisited, removeVisitedPark} = userStore;
+    const {addVisitedPark, hasVisited, removeVisitedPark, loadingButtons, isLoggedIn} = userStore;
     
+    const [target, setTarget] = useState('');
+    function changeTargetPark(e: SyntheticEvent<HTMLButtonElement>) {
+        setTarget(e.currentTarget.name);
+    }
+
     return (
-        <Segment.Group>
+        <Segment.Group key={park.id}>
             <Segment>
                 <Item.Group>
                     <Item>
@@ -34,15 +39,35 @@ export default observer(function ParkListItem({park}: Props) {
                 </Item.Group>
             </Segment>
             <Segment secondary clearing>
-                <Button size='tiny' floated='right'>States: {park.states}</Button>
+                <Label size='medium' style={{float: 'right'}}>States: {park.states}</Label>
                 <Container>Latitude: {park.latLong.split(",")[0].split(":")[1]}</Container>
                 <Container>Longitude: {park.latLong.split(",")[1].split(":")[1]}</Container>
             </Segment>  
             <Segment clearing>
-                {hasVisited(park.id) ? (
-                        <Button onClick={() => removeVisitedPark(park)} icon='check' style={{float:'right', background:'#5C9980', color: 'green'}} />
+                {isLoggedIn && hasVisited(park.id) ? (
+                        <Button name={park.id} 
+                            loading={loadingButtons && target === park.id} 
+                            disabled={loadingButtons && target === park.id} 
+                            onClick={(e) => {
+                                changeTargetPark(e);
+                                removeVisitedPark(park);
+                                }
+                            } 
+                            content='Visited' 
+                            icon='check' 
+                            style={{float:'right', color: 'green'}} />
                     ) : (
-                        <Button onClick={() => addVisitedPark(park)} icon='check' style={{float:'right', background:'#5C9980', color: 'red'}} />
+                        <Button name={park.id} 
+                            loading={loadingButtons && target === park.id} 
+                            disabled={loadingButtons && target === park.id} 
+                            onClick={(e) => {
+                                changeTargetPark(e);
+                                addVisitedPark(park);
+                                }
+                            } 
+                            content = 'Not Visited'
+                            icon='x' 
+                            style={{float:'right', color: 'red'}} />
                     )
                 }
             </Segment>

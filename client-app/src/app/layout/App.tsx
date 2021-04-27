@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useLocation } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
+import ServerError from '../../features/errors/ServerError';
 import ParkDashboard from '../../features/parks/dashboard/ParkDashboard';
 import ParkDetails from '../../features/parks/details/ParkDetails';
 import SplashPage from '../../features/splash/SplashPage';
@@ -12,7 +13,7 @@ import LoaderComponent from './LoaderComponent';
 import NavBar from './NavBar';
 
 function App() {
-  //const location = useLocation();
+  const location = useLocation();
   const {commonStore, userStore} = useStore();
 
   useEffect(() => {
@@ -28,19 +29,22 @@ function App() {
   return (
     <>
     <ModalContainer />
-    <Route exact path='/' component={SplashPage} />
+    <Route exact path='/' component={SplashPage} /> 
       <Route
         path={'/(.+)'}
-        render={() => (
-          <>
-            <NavBar />
-            <Container style={{marginTop: '7em'}}>
-              <Route exact path='/parks' component={ParkDashboard} />
-              <Route path='/parks/:id' component={ParkDetails} />
-              <Route path='/login' component={LoginForm}/>
-            </Container>
-          </>
-        )}
+        render={() => {
+          return (
+            <>
+              <NavBar />
+              <Container style={{ marginTop: '7em' }}>
+                <Route exact path='/parks' component={ParkDashboard} />
+                <Route path='/parks/:id' component={ParkDetails} />
+                <Route path='/login' component={LoginForm} />
+                <Route path='/server-error' component={ServerError} />
+              </Container>
+            </>
+          );
+        }}
       />
     </>
   );
