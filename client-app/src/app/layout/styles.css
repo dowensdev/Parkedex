@@ -1,5 +1,5 @@
 body {
-  background: #5C9980;
+  background-color: #EAEAEA !important; 
 }
 
 /* NavBar styles */
@@ -32,8 +32,15 @@ body {
   max-height:425px;
 }
 
-#map {
-  height: 400px;
+.map-outer {
+  display: flex;
+  justify-content: center;
+}
+
+.map-container {
+  display: flex;
+  justify-content: center;
+  height: 72vh;
   width: 100%;
 }
 
