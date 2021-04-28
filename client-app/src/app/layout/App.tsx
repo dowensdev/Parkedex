@@ -32,7 +32,7 @@ function App() {
     googleMapScript.addEventListener('load', function() {
         setScriptLoaded(true);
     });
-  }, [loadMapApi]);
+  });
 
   if (!commonStore.appLoaded) return <LoaderComponent content='Loading app...' />
 

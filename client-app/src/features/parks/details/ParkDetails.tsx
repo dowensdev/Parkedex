@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import LoaderComponent from '../../../app/layout/LoaderComponent';
 import { useStore } from '../../../app/stores/store';
-import { loadMapApi } from '../../../app/utils/GoogleMapUtils';
 import ParkListItem from '../dashboard/ParkListItem';
+import ParkCommentsSection from './ParkCommentsSection';
 import ParkMap from './ParkMap';
 
 interface Props {
@@ -32,6 +32,7 @@ export default observer(function ParkDetails(scriptLoaded: Props) {
         <Grid>
             <Grid.Column width={10}>
                 <ParkListItem park={park}/>
+                <ParkCommentsSection parkId={park.id}/>
             </Grid.Column>
             <Grid.Column width={6}>
                 {console.log(scriptLoaded)}

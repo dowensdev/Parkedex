@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react'
-import { Header } from 'semantic-ui-react'
 import { Park } from '../../../app/models/park';
 
 interface Props {
@@ -46,7 +45,7 @@ export default observer(function ParkMap({mapType, mapTypeControl = false, park}
             initMap(11, coordinates);
             setMap(undefined);
         }
-    }, [initMap, map]);
+    }, [initMap, map, park.latLong]);
 
     
 

@@ -22,5 +22,6 @@ namespace Domain
 
         //Many to many relationship to AppUsers
         public ICollection<VisitedPark> Visitors { get; set; } = new List<VisitedPark>();
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

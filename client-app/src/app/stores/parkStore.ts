@@ -67,13 +67,4 @@ export default class ParkStore {
         this.allParkMap.set(park.id, park);
     }
 
-    setVisitedParks = (park: Park) => {
-        if(this.userHasVisited) {
-            
-        }
-    }
-
-    setVisitedPark = (park: Park) => {
-        this.visitedParkList.push(park);
-    }
 }

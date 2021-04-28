@@ -34,6 +34,7 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddSignalR();
 
             return services;
         }
