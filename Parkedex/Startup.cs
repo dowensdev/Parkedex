@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using API.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using API.SignalR;
 
 namespace Parkedex
 {
@@ -51,7 +52,11 @@ namespace Parkedex
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+                    policy
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        .WithOrigins("http://localhost:3000");
                 });
             });
 
@@ -83,6 +88,7 @@ namespace Parkedex
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ParkCommentHub>("/parkcomments");
             });
         }
     }

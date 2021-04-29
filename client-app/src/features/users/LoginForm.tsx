@@ -2,7 +2,7 @@ import { ErrorMessage, Form, Formik } from 'formik'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Button, Header, Label } from 'semantic-ui-react'
-import TextInput from '../../app/common/form/TextInput'
+import AppTextInput from '../../app/common/form/AppTextInput'
 import { useStore } from '../../app/stores/store'
 
 export default observer(function LoginForm() {
@@ -17,8 +17,8 @@ export default observer(function LoginForm() {
             {({handleSubmit, isSubmitting, errors}) => (
                 <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                     <Header as='h2' content='Login to Parkedex' textAlign='center' />
-                    <TextInput name='email' placeholder='Email' />
-                    <TextInput name='password' placeholder='Password' type='password' />
+                    <AppTextInput name='email' placeholder='Email' />
+                    <AppTextInput name='password' placeholder='Password' type='password' />
                     <ErrorMessage
                         name='error' render={() => <Label style={{marginBottom:10}} basic color='red' content={errors.error}/>}
                     />

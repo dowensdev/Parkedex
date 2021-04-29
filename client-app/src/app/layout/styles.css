@@ -1,5 +1,5 @@
 body {
-  background: #5C9980;
+  background-color: #EAEAEA !important; 
 }
 
 /* NavBar styles */
@@ -14,8 +14,8 @@ body {
   background: #5C9980;
 }
 
-.ui.menu .item {
-  color: #EAEAEA;
+.ui.segment {
+  background:#EAEAEA;
 }
 
 /* Park Card styles */
@@ -30,4 +30,39 @@ body {
 
 .ui.card > .image {
   max-height:425px;
+}
+
+.map-outer {
+  display: flex;
+  justify-content: center;
+}
+
+.map-container {
+  display: flex;
+  justify-content: center;
+  height: 50vh;
+  width: 100%;
+}
+
+/* Home Page Styles */
+.masthead {
+  display: flex;
+  align-items: center;
+  height: 100vh;  
+  background-image: linear-gradient(to right, #1f4037, #99f2c8) !important;
+}
+
+.masthead .ui.menu .ui.button,
+.ui.menu a.ui.inverted.button {
+  margin-left: 0.5em;
+}
+
+.masthead h1.ui.header {
+  font-size: 4em;
+  font-weight: normal;
+}
+
+.masthead h2 {
+  font-size: 1.7em;
+  font-weight: normal;
 }

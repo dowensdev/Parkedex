@@ -3,6 +3,7 @@ import { Park } from '../models/park';
 import { User, UserFormValues } from '../models/user';
 import { store } from '../stores/store';
 import { history } from '../..'
+import { VisitedPark } from '../models/visitedPark';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -59,12 +60,21 @@ axios.interceptors.response.use(async response => {
 const data = <T> (response: AxiosResponse<T>) => response.data;
 
 const requests = {
-    get: <T> (url: string) =>axios.get<T>(url).then(data),
+    get: <T>(url: string) =>axios.get<T>(url).then(data),
     post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(data),
+    put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(data),
+    del: <T>(url: string) => axios.delete<T>(url).then(data)
 }
 
 const Parks = {
-    getAll: () => requests.get<Park[]>('/parks')
+    getAll: () => requests.get<Park[]>('/parks'),
+    get: (id: string) => requests.get<Park>(`/parks/${id}`)
+}
+
+const VisitedParks = {
+    getVisited: () => requests.get<VisitedPark[]>('/UserParks/'),
+    addVisited: (id: string) => requests.put<void>(`/UserParks/${id}`, {}),
+    removeVisited: (id: string) => requests.del<void>(`/UserParks/${id}`)
 }
 
 const Users = {
@@ -75,7 +85,8 @@ const Users = {
 
 const agent = {
     Parks,
-    Users
+    Users,
+    VisitedParks
 }
 
 export default agent;

@@ -16,10 +16,10 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new GetAllVisited.Query { }));
         }
 
-        [HttpPut("{parkCode}")]
-        public async Task<IActionResult> AddVisitedPark(string parkCode)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> AddVisitedPark(Guid id)
         {
-            return HandleResult(await Mediator.Send(new AddVisitedPark.Command { ParkCode = parkCode }));
+            return HandleResult(await Mediator.Send(new AddVisitedPark.Command { Id = id }));
         }
 
         [HttpDelete("{id}")]

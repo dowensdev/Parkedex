@@ -1,4 +1,5 @@
 import { ImageRef } from './imageref'
+import { User } from './user';
 
 export interface Park {
     id: string, 
@@ -9,4 +10,5 @@ export interface Park {
     states: string,
     latLong: string,
     images: ImageRef[];
+    visitors: string[];
 }

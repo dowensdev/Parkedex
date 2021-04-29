@@ -1,13 +1,13 @@
-﻿using Domain.Models;
+﻿using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace Application.Parks.DTOs
 {
-    public class Park
+    public class ParkDto
     {
         public Guid Id { get; set; }
         public string FullName { get; set; }
@@ -16,12 +16,8 @@ namespace Domain
         public string Description { get; set; }
         public string States { get; set; }
         public string LatLong { get; set; }
-
-        //Add image reference one to many list
-        public ICollection<ImageReference> Images { get; set; } = new List<ImageReference>();
-
-        //Many to many relationship to AppUsers
-        public ICollection<VisitedPark> Visitors { get; set; } = new List<VisitedPark>();
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public ICollection<ImageReference> Images { get; set; }
+        public int VisitorCount { get; set; }
+        public ICollection<VisitorDto> Visitors { get; set; }
     }
 }
