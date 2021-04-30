@@ -1,4 +1,5 @@
 ﻿using Application.Comments.DTOs;
+using Application.ImageReferences.DTOs;
 using Application.Parks.DTOs;
 using Application.UserParks;
 using AutoMapper;
@@ -11,18 +12,20 @@ namespace Application.Core.Mappings
     {
         public MappingProfiles()
         {
-            CreateMap<Park, Park>();
-            CreateMap<Park, ParkDto>();
-            CreateMap<ImageReference, ImageReference>();
+            CreateMap<Park, ParkDto>()
+                .ForMember(d => d.VisitorCount, o => o.MapFrom(s => s.Visitors.Count));
+            
+            CreateMap<ImageReference, ImageRefDto>();
+            
             CreateMap<VisitedPark, VisitorDto>()
-                .ForMember(d => d.DisplayName, o => o.MapFrom(vp => vp.AppUser.DisplayName));
+                .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName));
+            CreateMap<VisitedPark, VisitedParkDto>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.ParkId))
+                .ForMember(d => d.FullName, o => o.MapFrom(s => s.Park.FullName));
 
             CreateMap<Comment, CommentDto>()
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
                 .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName));
-
-
-            //CreateMap<VisitedPark, VisitedParkDto>()
         }
     }
 }
