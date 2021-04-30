@@ -94,6 +94,7 @@ export default class UserStore {
                 await agent.VisitedParks.addVisited(park.id)
                 runInAction(() => {
                     this.visitedParksMap.set(park.id, park.fullName);
+                    park.visitorCount++;
                     this.loadingButtons = false;
                 })
             } catch(error) {
@@ -109,6 +110,7 @@ export default class UserStore {
             await agent.VisitedParks.removeVisited(park.id)
             runInAction(() => {
                 this.visitedParksMap.delete(park.id);
+                park.visitorCount--;
                 this.loadingButtons = false;
             })
         } catch(error) {

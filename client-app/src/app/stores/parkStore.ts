@@ -5,9 +5,8 @@ import { Park } from "../models/park";
 export default class ParkStore {
     currentPark: Park | undefined = undefined;
     allParkMap = new Map<string, Park>();
-    visitedParkList: Array<Park> = [];
+    currentParkImageMap = new Map<string, number>();
     loadingInitial: boolean = false;
-    userHasVisited: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -36,7 +35,7 @@ export default class ParkStore {
         let park = this.getPark(id);
         if(park) {
             this.currentPark = park;
-            console.log(park);
+            this.currentParkImageMap.set(park.id, 0);
             return park;
         } else {
             this.loadingInitial = true;
@@ -45,6 +44,9 @@ export default class ParkStore {
                 this.setPark(park);
                 runInAction(() => {
                     this.currentPark = park;
+                    if(this.currentPark != undefined) {
+                        this.currentParkImageMap.set(this.currentPark.id, 0);
+                    }
                 });
                 this.setLoadingInitial(false);
                 return park;
@@ -65,6 +67,21 @@ export default class ParkStore {
 
     private setPark = (park: Park) => {
         this.allParkMap.set(park.id, park);
+        this.currentParkImageMap.set(park.id, 0);
+
     }
 
+    //ImageRef Functions
+    getCurrentImage = (id: string) => {
+        return (this.currentParkImageMap.has(id)) ? this.currentParkImageMap.get(id) : 0
+    }
+
+    updateCurrentImage = (id: string) => {
+        let park = this.getPark(id)
+        if(park && park.images.length != 0) {
+            let currentImage = this.currentParkImageMap.get(id)!;
+            let nextImage = (currentImage + 1) % park.images.length;
+            this.currentParkImageMap.set(id, nextImage);
+        }
+    }
 }

@@ -19,6 +19,5 @@ namespace Application.Parks.DTOs
         public ICollection<ImageReference> Images { get; set; }
         public int VisitorCount { get; set; }
         public ICollection<VisitorDto> Visitors { get; set; }
-        
     }
 }

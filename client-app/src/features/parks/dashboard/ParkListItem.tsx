@@ -1,7 +1,8 @@
+import { parseJSON } from 'date-fns';
 import { observer } from 'mobx-react-lite';
-import React, { SyntheticEvent, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Item, Image, Button, Segment, Container, Label} from 'semantic-ui-react';
+import { Item, Image, Button, Segment, Container, Label, Header, Popup, List} from 'semantic-ui-react';
 import { Park } from '../../../app/models/park';
 import { useStore } from '../../../app/stores/store';
 
@@ -10,8 +11,9 @@ interface Props {
 }
 
 export default observer(function ParkListItem({park}: Props) {
-    const {userStore} = useStore();
+    const {userStore, parkStore} = useStore();
     const {addVisitedPark, hasVisited, removeVisitedPark, loadingButtons, isLoggedIn} = userStore;
+    const {getCurrentImage, updateCurrentImage} = parkStore;
     
     const [target, setTarget] = useState('');
     function changeTargetPark(e: SyntheticEvent<HTMLButtonElement>) {
@@ -27,10 +29,24 @@ export default observer(function ParkListItem({park}: Props) {
                             <Item.Header as={Link} to={`/parks/${park.id}`} style={{marginBottom:10}}>
                                 {park.fullName}
                             </Item.Header>
-                            {park.fullName === 'Biscayne National Park' ?
-                                <Image src={park.images[1].url} size='huge' bordered centered /> :
-                                <Image src={park.images[0].url} size='huge' bordered centered />
-                            }
+                            <Popup
+                                hoverable
+                                position='bottom left'
+                                trigger={
+                                    <Button onClick={() => updateCurrentImage(park.id)}style={{margins:'0', padding:'0'}}>
+                                        <Image src={park.images[getCurrentImage(park.id)!].url} size='huge' fluid/>
+                                    </Button>
+                                }
+                            >
+                                <Popup.Content>
+                                    <List>
+                                        <List.Item>{park.images[getCurrentImage(park.id)!].title}</List.Item>
+                                        <List.Item>Credit: {park.images[getCurrentImage(park.id)!].credit}</List.Item>
+                                        <List.Item><a href={park.images[getCurrentImage(park.id)!].url}>{park.images[0].url}</a></List.Item>
+                                    </List>
+                                </Popup.Content>
+                            </Popup>
+                            
                             <Item.Description>
                                 {park.description}
                             </Item.Description>
@@ -44,6 +60,10 @@ export default observer(function ParkListItem({park}: Props) {
                 <Container>Longitude: {park.latLong.split(",")[1].split(":")[1]}</Container>
             </Segment>  
             <Segment clearing>
+                {(park.visitorCount === 1) ?
+                    <Label size='large'>{park.visitorCount} user has visited this park.</Label> :
+                    <Label size='large'>{park.visitorCount} users have visited this park.</Label>
+                }
                 {isLoggedIn && hasVisited(park.id) ? (
                         <Button name={park.id} 
                             loading={loadingButtons && target === park.id} 

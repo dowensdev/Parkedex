@@ -1,4 +1,4 @@
-import { ImageRef } from './imageref'
+import { ImageRef } from './imageRef'
 import { User } from './user';
 
 export interface Park {
@@ -9,6 +9,7 @@ export interface Park {
     description: string,
     states: string,
     latLong: string,
+    visitorCount: number,
     images: ImageRef[];
     visitors: string[];
 }
