@@ -33,15 +33,15 @@ export default observer(function ParkListItem({park}: Props) {
                                 position='bottom left'
                                 trigger={
                                     <Button onClick={() => updateCurrentImage(park.id)}style={{margins:'0', padding:'0'}}>
-                                        <Image src={park.images[getCurrentImage(park.id)!].url} size='huge' fluid/>
+                                        <Image src={park.images[getCurrentImage(park.id) || 0].url} size='huge' fluid/>
                                     </Button>
                                 }
                             >
                                 <Popup.Content>
                                     <List>
                                         <List.Item>{park.images[getCurrentImage(park.id)!].title}</List.Item>
-                                        <List.Item>Credit: {park.images[getCurrentImage(park.id)!].credit}</List.Item>
-                                        <List.Item><a href={park.images[getCurrentImage(park.id)!].url}>{park.images[0].url}</a></List.Item>
+                                        <List.Item>Credit: {park.images[getCurrentImage(park.id) || 0].credit}</List.Item>
+                                        <List.Item><a href={park.images[getCurrentImage(park.id) || 0].url}>{park.images[0].url}</a></List.Item>
                                     </List>
                                 </Popup.Content>
                             </Popup>

@@ -79,8 +79,8 @@ export default class ParkStore {
     updateCurrentImage = (id: string) => {
         let park = this.getPark(id)
         if(park && park.images.length !== 0) {
-            let currentImage = this.currentParkImageMap.get(id)!;
-            let nextImage = (currentImage + 1) % park.images.length;
+            const currentImage = this.getCurrentImage(id) || 0;
+            const nextImage = (currentImage + 1) % park.images.length;
             this.currentParkImageMap.set(id, nextImage);
         }
     }
