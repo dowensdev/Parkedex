@@ -1,8 +1,7 @@
-import { parseJSON } from 'date-fns';
 import { observer } from 'mobx-react-lite';
-import React, { SyntheticEvent, useEffect, useState } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Item, Image, Button, Segment, Container, Label, Header, Popup, List} from 'semantic-ui-react';
+import { Item, Image, Button, Segment, Container, Label, Popup, List} from 'semantic-ui-react';
 import { Park } from '../../../app/models/park';
 import { useStore } from '../../../app/stores/store';
 

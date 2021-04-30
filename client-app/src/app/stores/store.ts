@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import CommonStore from "./commonStore";
+import MapStore from "./mapStore";
 import ModalStore from "./modalStore";
 import ParkCommentStore from "./parkCommentStore";
 import ParkStore from "./parkStore";
@@ -11,6 +12,7 @@ interface Store {
     userStore: UserStore;
     modalStore: ModalStore;
     parkCommentStore: ParkCommentStore;
+    mapStore: MapStore;
 }
 
 export const store: Store = {
@@ -19,6 +21,7 @@ export const store: Store = {
     userStore: new UserStore(),
     modalStore: new ModalStore(),
     parkCommentStore: new ParkCommentStore(),
+    mapStore: new MapStore(),
 }
 
 export const StoreContext = createContext(store);

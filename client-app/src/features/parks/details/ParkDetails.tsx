@@ -8,13 +8,10 @@ import ParkListItem from '../dashboard/ParkListItem';
 import ParkCommentsSection from './ParkCommentsSection';
 import ParkMap from './ParkMap';
 
-interface Props {
-    scriptLoaded: boolean
-}
-
-export default observer(function ParkDetails(scriptLoaded: Props) {
-    const {parkStore, userStore} = useStore();
+export default observer(function ParkDetails() {
+    const {parkStore, userStore, mapStore} = useStore();
     const {currentPark: park, loadingInitial, loadPark} = parkStore;
+    const {mapScriptLoaded} = mapStore;
     const {getUser, setVisitedParks} = userStore;
     const {id} = useParams<{id: string}>();
 
@@ -35,9 +32,8 @@ export default observer(function ParkDetails(scriptLoaded: Props) {
                 <ParkCommentsSection parkId={park.id}/>
             </Grid.Column>
             <Grid.Column width={6}>
-                {console.log(scriptLoaded)}
-                {scriptLoaded && (
-                    <ParkMap mapType={google.maps.MapTypeId.ROADMAP} mapTypeControl={true} park={park}/>
+                {mapScriptLoaded && (
+                    <ParkMap park={park}/>
                 )}
             </Grid.Column>
         </Grid>
