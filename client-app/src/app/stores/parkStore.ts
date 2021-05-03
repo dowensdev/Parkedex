@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
+import { Pagination, PagingParams } from "../models/pagination";
 import { Park } from "../models/park";
 
 export default class ParkStore {
@@ -7,6 +8,8 @@ export default class ParkStore {
     allParkMap = new Map<string, Park>();
     currentParkImageMap = new Map<string, number>();
     loadingInitial: boolean = false;
+    pagination: Pagination | null = null;
+    pagingParams = new PagingParams();
 
     constructor() {
         makeAutoObservable(this);
@@ -20,10 +23,11 @@ export default class ParkStore {
     loadParks = async () => {
         this.setLoadingInitial(true);
         try {
-            const parks = await agent.Parks.getAll();
-            parks.forEach(park => {
+            const result = await agent.Parks.getAll(this.axiosParams);
+            result.data.forEach(park => {
                this.setPark(park);
             })
+            this.setPagination(result.pagination);
             this.setLoadingInitial(false);
         } catch(error) {
             console.log(error);
@@ -71,7 +75,7 @@ export default class ParkStore {
 
     }
 
-    //ImageRef Functions
+    //ImageRef functions
     getCurrentImage = (id: string) => {
         return (this.currentParkImageMap.has(id)) ? this.currentParkImageMap.get(id) : 0
     }
@@ -83,5 +87,21 @@ export default class ParkStore {
             const nextImage = (currentImage + 1) % park.images.length;
             this.currentParkImageMap.set(id, nextImage);
         }
+    }
+
+    //Pagination functions
+    setPagination = (pagination: Pagination) => {
+        this.pagination = pagination;
+    }
+
+    setPagingParams = (pagingParams: PagingParams) => {
+        this.pagingParams = pagingParams;
+    }
+
+    get axiosParams() {
+        const params = new URLSearchParams();
+        params.append('pageNumber', this.pagingParams.pageNumber.toString());
+        params.append('pageSize', this.pagingParams.pageSize.toString());
+        return params;
     }
 }

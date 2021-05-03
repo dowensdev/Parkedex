@@ -43,6 +43,7 @@ namespace Parkedex
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
+                        .WithExposedHeaders("Pagination")
                         .WithOrigins("http://localhost:3000");
                 });
             });

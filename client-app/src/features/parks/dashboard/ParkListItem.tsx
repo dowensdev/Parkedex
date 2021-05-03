@@ -30,7 +30,7 @@ export default observer(function ParkListItem({park}: Props) {
                             </Item.Header>
                             <Popup
                                 hoverable
-                                position='bottom left'
+                                position='left center'
                                 trigger={
                                     <Button onClick={() => updateCurrentImage(park.id)}style={{margins:'0', padding:'0'}}>
                                         <Image src={park.images[getCurrentImage(park.id) || 0].url} size='huge' fluid/>
@@ -45,7 +45,6 @@ export default observer(function ParkListItem({park}: Props) {
                                     </List>
                                 </Popup.Content>
                             </Popup>
-                            
                             <Item.Description>
                                 {park.description}
                             </Item.Description>
