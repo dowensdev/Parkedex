@@ -15,7 +15,7 @@ export default observer(function VisitedParksList() {
                 <Menu style={{marginLeft:10}} vertical borderless>
                     <Header content='Visited Parks' textAlign='center' style={{marginTop:10}} inverted/>
                     {allVisited.map((park) => (
-                        <Menu.Item key={park[0]} as={Link} to={`/parks/${park[0]}`} clearing>
+                        <Menu.Item key={park[0]} as={Link} to={`/parks/${park[0]}`} >
                             {park[1]}
                         </Menu.Item>
                         

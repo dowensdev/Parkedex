@@ -70,7 +70,7 @@ export default class UserStore {
 
     setVisitedParks = async () => {
         this.setLoadingVisited(true);
-        if(this.user) {
+        if(store.userStore.user) {
             try{
                 const visitedParks = await agent.VisitedParks.getVisited();
                 runInAction(() => {
@@ -89,7 +89,7 @@ export default class UserStore {
 
     addVisitedPark = async (park: Park) => {
         this.loadingButtons = true;
-        if(this.user && !this.hasVisited(park.id)) {
+        if(store.userStore.user && !this.hasVisited(park.id)) {
             try {
                 await agent.VisitedParks.addVisited(park.id)
                 runInAction(() => {

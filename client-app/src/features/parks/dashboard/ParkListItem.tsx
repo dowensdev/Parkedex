@@ -11,7 +11,7 @@ interface Props {
 
 export default observer(function ParkListItem({park}: Props) {
     const {userStore, parkStore} = useStore();
-    const {addVisitedPark, hasVisited, removeVisitedPark, loadingButtons, isLoggedIn} = userStore;
+    const {addVisitedPark, hasVisited, removeVisitedPark, loadingButtons, isLoggedIn } = userStore;
     const {getCurrentImage, updateCurrentImage} = parkStore;
     
     const [target, setTarget] = useState('');
@@ -33,7 +33,7 @@ export default observer(function ParkListItem({park}: Props) {
                                 position='left center'
                                 trigger={
                                     <Button onClick={() => updateCurrentImage(park.id)}style={{margins:'0', padding:'0'}}>
-                                        <Image src={park.images[getCurrentImage(park.id) || 0].url} size='huge' fluid/>
+                                        <Image src={park.images[getCurrentImage(park.id) || 0].url} size='huge'/>
                                     </Button>
                                 }
                             >
@@ -62,7 +62,8 @@ export default observer(function ParkListItem({park}: Props) {
                     <Label size='large'>{park.visitorCount} user has visited this park.</Label> :
                     <Label size='large'>{park.visitorCount} users have visited this park.</Label>
                 }
-                {isLoggedIn && hasVisited(park.id) ? (
+                {isLoggedIn ?
+                    hasVisited(park.id) ? (
                         <Button name={park.id} 
                             loading={loadingButtons && target === park.id} 
                             disabled={loadingButtons && target === park.id} 
@@ -86,6 +87,19 @@ export default observer(function ParkListItem({park}: Props) {
                             content = 'Not Visited'
                             icon='x' 
                             style={{float:'right', color: 'red'}} />
+                    ) : (
+                        <Popup
+                            hoverable
+                            position='right center'
+                            content='Create an account to use this feature!'
+                            trigger={
+                                <Button
+                                     
+                                    content = 'Not Visited'
+                                    icon='x' 
+                                    style={{float:'right', color: 'red'}} />
+                            }
+                        />
                     )
                 }
             </Segment>

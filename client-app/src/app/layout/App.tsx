@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import { Route, useLocation } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import ServerError from '../../features/errors/ServerError';
 import ParkDashboard from '../../features/parks/dashboard/ParkDashboard';
 import ParkDetails from '../../features/parks/details/ParkDetails';
+import ProfileDashboard from '../../features/profiles/ProfileDashboard';
 import SplashPage from '../../features/splash/SplashPage';
 import LoginForm from '../../features/users/LoginForm';
 import ModalContainer from '../common/modals/ModalContainer';
@@ -13,7 +14,6 @@ import LoaderComponent from './LoaderComponent';
 import NavBar from './NavBar';
 
 function App() {
-  const location = useLocation();
   const {commonStore, userStore, mapStore} = useStore();
 
   useEffect(() => {
@@ -44,6 +44,7 @@ function App() {
                 <Route exact path='/parks' component={ParkDashboard} />
                 <Route path='/parks/:id' component ={ParkDetails} />
                 <Route path='/login' component={LoginForm} />
+                <Route path='/profile/:username' component={ProfileDashboard} />
                 <Route path='/server-error' component={ServerError} />
               </Container>
             </>
