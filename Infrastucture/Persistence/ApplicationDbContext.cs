@@ -52,6 +52,12 @@ namespace Infrastucture.Persistence
                 .HasOne(p => p.Park)
                 .WithMany(c => c.Comments)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            //One to many visitedparks to visit logs relatioship
+            modelBuilder.Entity<VisitedPark>()
+                .HasMany(vl => vl.VisitLogs)
+                .WithOne(vp => vp.VisitedPark)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
