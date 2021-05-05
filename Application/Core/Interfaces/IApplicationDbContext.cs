@@ -17,6 +17,7 @@ namespace Application.Core.Interfaces
         DbSet<ImageReference> ImageReferences { get; set; }
         DbSet<AppUser> Users { get; set; }
         DbSet<VisitedPark> VisitedParks { get; set; }
+        DbSet<VisitLog> VisitLogs { get; set; }
         DbSet<Comment> Comments { get; set; }
         Task<int> SaveChangesAsync();
     }

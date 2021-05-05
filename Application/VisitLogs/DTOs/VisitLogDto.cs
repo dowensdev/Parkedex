@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models
+namespace Application.VisitLogs.DTOs
 {
-    public class VisitLog
+    public class VisitLogDto
     {
         public Guid Id { get; set; }
         public string ParkName { get; set; }
@@ -14,7 +14,5 @@ namespace Domain.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Notes { get; set; }
-        public Guid ParkRef { get; set; }
-        public AppUser AppUser { get; set; }
     }
 }

@@ -12,6 +12,5 @@ namespace Domain.Models
         public AppUser AppUser { get; set; }
         public Guid ParkId { get; set; }
         public Park Park { get; set; }
-        public ICollection<VisitLog> VisitLogs { get; set; } = new List<VisitLog>();
     }
 }

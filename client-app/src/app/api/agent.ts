@@ -5,6 +5,7 @@ import { store } from '../stores/store';
 import { history } from '../..'
 import { VisitedPark } from '../models/visitedPark';
 import { PaginatedResult } from '../models/pagination';
+import { VisitLog, VisitLogFormValues } from '../models/visitLog';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -57,6 +58,7 @@ axios.interceptors.response.use(async response => {
             break;
         case 500:
             store.commonStore.setServerError(data);
+            console.log(data);
             history.push('/server-error');
             break;
     }
@@ -84,6 +86,13 @@ const VisitedParks = {
     removeVisited: (id: string) => requests.del<void>(`/UserParks/${id}`)
 }
 
+const VisitLogs = {
+    getVisitLogs: () => requests.get<VisitLog[]>('/VisitLog/'),
+    addVisitLog: (parkId: string, visitLog: VisitLogFormValues) => requests.post<VisitLog>(`/VisitLog/${parkId}`, visitLog),
+    editVisitLog: (id: string, visitLog: VisitLogFormValues) => requests.put<VisitLog>(`/VisitLog/${id}`, visitLog),
+    removeVisitLog: (id: string) => requests.del<void>(`/VisitLog/${id}`)
+}
+
 const Users = {
     current: () => requests.get<User>('/user'),
     login: (user: UserFormValues) => requests.post<User>('/user/login', user),
@@ -93,7 +102,8 @@ const Users = {
 const agent = {
     Parks,
     Users,
-    VisitedParks
+    VisitedParks,
+    VisitLogs,
 }
 
 export default agent;

@@ -73,6 +73,7 @@ export default class UserStore {
         if(store.userStore.user) {
             try{
                 const visitedParks = await agent.VisitedParks.getVisited();
+                console.log(visitedParks);
                 runInAction(() => {
                     visitedParks.forEach(park => {
                         this.visitedParksMap.set(park.id, park.fullName);

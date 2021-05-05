@@ -1,22 +1,24 @@
 ﻿using Application.Core;
 using Application.Core.Interfaces;
+using Application.VisitLogs.DTOs;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.UserParks
+namespace Application.VisitLogs
 {
-    public class GetAllVisited
+    public class GetAllUserVisitLogs
     {
-        public class Query : IRequest<Result<List<VisitedParkDto>>> { }
+        public class Query : IRequest<Result<List<VisitLogDto>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<List<VisitedParkDto>>>
+        public class Handler : IRequestHandler<Query, Result<List<VisitLogDto>>>
         {
             private readonly IApplicationDbContext _db;
             private readonly IMapper _mapper;
@@ -29,13 +31,13 @@ namespace Application.UserParks
                 _db = db;
             }
 
-            public async Task<Result<List<VisitedParkDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<VisitLogDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var visitedParks = await _db.VisitedParks.Where(x => x.AppUser.UserName == _userAccessor.GetUsername())
-                    .ProjectTo<VisitedParkDto>(_mapper.ConfigurationProvider)
+                var visitLogs = await _db.VisitLogs.Where(x => x.AppUser.UserName == _userAccessor.GetUsername())
+                    .ProjectTo<VisitLogDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 
-                return Result<List<VisitedParkDto>>.Success(visitedParks);
+                return Result<List<VisitLogDto>>.Success(visitLogs);
             }
         }
     }

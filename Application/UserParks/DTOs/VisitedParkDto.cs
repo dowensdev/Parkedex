@@ -1,4 +1,7 @@
-﻿using Domain;
+﻿
+using Application.VisitLogs.DTOs;
+using Domain;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +14,7 @@ namespace Application.UserParks
     {
         public Guid Id { get; set; }
         public string FullName { get; set; }
+        public int VisitLogCount { get; set; }
+        public ICollection<VisitLogDto> VisitLogs { get; set; }
     }
 }

@@ -152,11 +152,20 @@ namespace Infrastucture.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ParkName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ParkRef")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -164,17 +173,11 @@ namespace Infrastucture.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("VisitedParkAppUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid?>("VisitedParkParkId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("VisitedParkAppUserId", "VisitedParkParkId");
+                    b.HasIndex("AppUserId");
 
-                    b.ToTable("VisitLog");
+                    b.ToTable("VisitLogs");
                 });
 
             modelBuilder.Entity("Domain.Models.VisitedPark", b =>
@@ -381,12 +384,12 @@ namespace Infrastucture.Migrations
 
             modelBuilder.Entity("Domain.Models.VisitLog", b =>
                 {
-                    b.HasOne("Domain.Models.VisitedPark", "VisitedPark")
+                    b.HasOne("Domain.Models.AppUser", "AppUser")
                         .WithMany("VisitLogs")
-                        .HasForeignKey("VisitedParkAppUserId", "VisitedParkParkId")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("VisitedPark");
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Domain.Models.VisitedPark", b =>
@@ -462,10 +465,7 @@ namespace Infrastucture.Migrations
             modelBuilder.Entity("Domain.Models.AppUser", b =>
                 {
                     b.Navigation("ParksVisited");
-                });
 
-            modelBuilder.Entity("Domain.Models.VisitedPark", b =>
-                {
                     b.Navigation("VisitLogs");
                 });
 

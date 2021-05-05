@@ -17,6 +17,7 @@ namespace Infrastucture.Persistence
         public DbSet<Park> Parks { get; set; }
         public DbSet<ImageReference> ImageReferences { get; set; }
         public DbSet<VisitedPark> VisitedParks { get; set; }
+        public DbSet<VisitLog> VisitLogs { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
         public async Task<int> SaveChangesAsync()
@@ -53,10 +54,10 @@ namespace Infrastucture.Persistence
                 .WithMany(c => c.Comments)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            //One to many visitedparks to visit logs relatioship
-            modelBuilder.Entity<VisitedPark>()
+            //One to many appuser to visit logs relationship
+            modelBuilder.Entity<AppUser>()
                 .HasMany(vl => vl.VisitLogs)
-                .WithOne(vp => vp.VisitedPark)
+                .WithOne(u => u.AppUser)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
