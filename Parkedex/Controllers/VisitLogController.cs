@@ -30,10 +30,9 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVisitLog(Guid id, VisitLog visitLog)
+        public async Task<IActionResult> UpdateVisitLog(VisitLog visitLog)
         {
-            visitLog.Id = id;
-            return HandleResult(await Mediator.Send(new Update.Command { Id = id, VisitLog = visitLog }));
+            return HandleResult(await Mediator.Send(new Update.Command { VisitLog = visitLog }));
         }
 
         [HttpDelete("{id}")]

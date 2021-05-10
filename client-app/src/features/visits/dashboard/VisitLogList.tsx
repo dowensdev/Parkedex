@@ -16,7 +16,7 @@ export default observer(function VisitLogList({park}: Props) {
     return (
         <>
             {visitLogsByPark(park.id).map((visitLog: VisitLog) => (
-                <VisitLogDetails key={visitLog.id} visitLog={visitLog}/>
+                <VisitLogDetails key={visitLog.id} visitLog={visitLog} />
             ))}
         </>      
     )

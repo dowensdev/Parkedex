@@ -34,6 +34,8 @@ namespace Application.Core.Mappings
             CreateMap<Comment, CommentDto>()
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
                 .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName));
+
+            CreateMap<VisitLog, VisitLog>();
         }
     }
 }

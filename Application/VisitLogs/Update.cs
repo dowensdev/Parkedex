@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Models;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,6 @@ namespace Application.VisitLogs
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Guid Id { get; set; }
             public VisitLog VisitLog { get; set; }
         }
 
@@ -33,10 +33,12 @@ namespace Application.VisitLogs
         {
             private readonly IApplicationDbContext _db;
             private readonly IMapper _mapper;
-            public Handler(IApplicationDbContext db, IMapper mapper)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(IApplicationDbContext db, IMapper mapper, IUserAccessor userAccessor)
             {
                 _db = db;
                 _mapper = mapper;
+                _userAccessor = userAccessor;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)

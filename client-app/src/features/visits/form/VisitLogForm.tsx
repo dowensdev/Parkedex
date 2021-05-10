@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Button, Header, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
@@ -13,14 +13,14 @@ import AppTextInput from '../../../app/common/form/AppTextInput';
 import AppTextArea from '../../../app/common/form/AppTextArea';
 
 interface Props {
-    park: Park
+    park: Park;
+    logId: string;
 }
 
-export default observer(function VisitLogForm({park}: Props) {
+export default observer(function VisitLogForm({park, logId}: Props) {
     const history = useHistory();
     const { visitLogStore, modalStore } = useStore();
     const { createVisitLog, editVisitLog, loadVisitLog } = visitLogStore;
-    const { id } = useParams<{ id: string }>();
 
     const [visitLog, setVisitLog] = useState<VisitLogFormValues>(new VisitLogFormValues());
 
@@ -31,8 +31,8 @@ export default observer(function VisitLogForm({park}: Props) {
     })
 
     useEffect(() => {
-        if (id) loadVisitLog(id).then(visitLog => setVisitLog(new VisitLogFormValues(visitLog)))
-    }, [id, loadVisitLog]);
+        if (logId !== 'create') loadVisitLog(logId).then(visitLog => setVisitLog(new VisitLogFormValues(visitLog)))
+    }, [loadVisitLog, logId]);
 
     function handleFormSubmit(visitLog: VisitLogFormValues) {
         if (!visitLog.id) {

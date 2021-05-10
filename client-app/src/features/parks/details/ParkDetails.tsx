@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { SyntheticEvent, useEffect, useState } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Item, Image, Button, Segment, Container, Label, Popup, List} from 'semantic-ui-react';
 import { Park } from '../../../app/models/park';
@@ -79,7 +79,7 @@ export default observer(function ParkDetails({park}: Props) {
                                 />
                             }
                             <Button 
-                                onClick={() => modalStore.openModal(<VisitLogForm park={park} />)} 
+                                onClick={() => modalStore.openModal(<VisitLogForm park={park} logId={'create'} />)} 
                                 icon='plus' 
                                 style={{float:'right', color: 'green'}}
                             />

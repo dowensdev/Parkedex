@@ -12,8 +12,6 @@ export default observer(function ParkDetailDashboard() {
     const {parkStore, userStore, mapStore, visitLogStore} = useStore();
     const {currentPark: park, loadingInitial, loadPark} = parkStore;
     const {mapScriptLoaded} = mapStore;
-    const {getUser, setVisitedParks} = userStore;
-    const {loadVisitLogs} = visitLogStore;
     const {id} = useParams<{id: string}>();
 
     useEffect(() => {
