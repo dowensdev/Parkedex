@@ -14,5 +14,6 @@ namespace Application.VisitLogs.DTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Notes { get; set; }
+        public Guid ParkRef { get; set; }
     }
 }

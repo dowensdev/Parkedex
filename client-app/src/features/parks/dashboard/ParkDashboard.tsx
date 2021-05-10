@@ -9,7 +9,7 @@ import AllParksList from './AllParksList';
 import VisitedParksList from './VisitedParksList';
 
 export default observer(function ParkDashboard() {
-    const {userStore, parkStore} = useStore();
+    const {userStore, parkStore } = useStore();
     const {setPagingParams, pagination, loadParks} = parkStore;
     const {getUser, setVisitedParks, loadingVisitedList, isLoggedIn} = userStore;
     const [loadingNext, setLoadingNext] = useState(false);

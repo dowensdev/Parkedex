@@ -5,6 +5,7 @@ import ModalStore from "./modalStore";
 import ParkCommentStore from "./parkCommentStore";
 import ParkStore from "./parkStore";
 import UserStore from "./userStore";
+import VisitLogStore from "./visitLogStore";
 
 interface Store {
     commonStore: CommonStore;
@@ -13,6 +14,7 @@ interface Store {
     modalStore: ModalStore;
     parkCommentStore: ParkCommentStore;
     mapStore: MapStore;
+    visitLogStore: VisitLogStore;
 }
 
 export const store: Store = {
@@ -22,6 +24,7 @@ export const store: Store = {
     modalStore: new ModalStore(),
     parkCommentStore: new ParkCommentStore(),
     mapStore: new MapStore(),
+    visitLogStore: new VisitLogStore()
 }
 
 export const StoreContext = createContext(store);

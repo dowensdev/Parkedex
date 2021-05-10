@@ -81,16 +81,17 @@ const Parks = {
 }
 
 const VisitedParks = {
-    getVisited: () => requests.get<VisitedPark[]>('/UserParks/'),
-    addVisited: (id: string) => requests.put<void>(`/UserParks/${id}`, {}),
-    removeVisited: (id: string) => requests.del<void>(`/UserParks/${id}`)
+    getVisited: () => requests.get<VisitedPark[]>('/userparks/'),
+    addVisited: (id: string) => requests.put<void>(`/userparks/${id}`, {}),
+    removeVisited: (id: string) => requests.del<void>(`/userparks/${id}`)
 }
 
 const VisitLogs = {
-    getVisitLogs: () => requests.get<VisitLog[]>('/VisitLog/'),
-    addVisitLog: (parkId: string, visitLog: VisitLogFormValues) => requests.post<VisitLog>(`/VisitLog/${parkId}`, visitLog),
-    editVisitLog: (id: string, visitLog: VisitLogFormValues) => requests.put<VisitLog>(`/VisitLog/${id}`, visitLog),
-    removeVisitLog: (id: string) => requests.del<void>(`/VisitLog/${id}`)
+    getVisitLogs: () => requests.get<VisitLog[]>('/visitlog/'),
+    getVisitLog: (id: string) => requests.get<VisitLog>(`/visitlog/${id}`),
+    addVisitLog: (parkId: string, visitLog: VisitLogFormValues) => requests.post<VisitLog>(`/visitlog/${parkId}`, visitLog),
+    editVisitLog: (visitLog: VisitLogFormValues) => requests.put<VisitLog>(`/visitlog/${visitLog.id}`, visitLog),
+    removeVisitLog: (id: string) => requests.del<void>(`/visitlog/${id}`)
 }
 
 const Users = {

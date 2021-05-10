@@ -46,7 +46,9 @@ namespace Application.VisitLogs
                 var visitedPark = await _db.VisitedParks.FindAsync(user.Id, request.ParkId);
                 if (visitedPark == null) return null;
 
-                user.VisitLogs.Add(request.VisitLog);
+                request.VisitLog.AppUser = user;
+
+                _db.VisitLogs.Add(request.VisitLog);
 
                 var result = await _db.SaveChangesAsync() > 0;
                 if (!result) return Result<Unit>.Failure("Failed to create Visit Log");

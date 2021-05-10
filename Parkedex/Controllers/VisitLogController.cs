@@ -17,6 +17,12 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new GetAllUserVisitLogs.Query { }));
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserVisitLog(Guid id)
+        {
+            return HandleResult(await Mediator.Send(new GetUserVisitLog.Query { Id = id }));
+        }
+
         [HttpPost("{id}")]
         public async Task<IActionResult> AddVisitLog(Guid id, VisitLog visitLog)
         {

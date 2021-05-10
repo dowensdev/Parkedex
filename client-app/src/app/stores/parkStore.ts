@@ -104,4 +104,7 @@ export default class ParkStore {
         params.append('pageSize', this.pagingParams.pageSize.toString());
         return params;
     }
+    clearPark = () => {
+        this.currentPark = undefined;
+    }
 }
