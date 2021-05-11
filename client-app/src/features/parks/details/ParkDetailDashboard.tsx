@@ -9,7 +9,7 @@ import ParkDetails from './ParkDetails';
 import ParkMap from './ParkMap';
 
 export default observer(function ParkDetailDashboard() {
-    const {parkStore, userStore, mapStore, visitLogStore} = useStore();
+    const {parkStore, mapStore} = useStore();
     const {currentPark: park, loadingInitial, loadPark} = parkStore;
     const {mapScriptLoaded} = mapStore;
     const {id} = useParams<{id: string}>();

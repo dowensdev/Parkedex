@@ -25,7 +25,7 @@ namespace Application.VisitLogs
         {
             public CommandValidator()
             {
-
+                RuleFor(x => x.VisitLog).SetValidator(new VisitLogValidator());
             }
         }
 

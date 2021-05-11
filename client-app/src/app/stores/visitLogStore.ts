@@ -1,5 +1,4 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { computed } from "mobx";
 import agent from "../api/agent";
 import { VisitLog, VisitLogFormValues } from "../models/visitLog";
 import { store } from "./store";
@@ -60,6 +59,10 @@ export default class VisitLogStore {
 
     visitLogsByPark = (parkId: string) => {
         return Array.from(this.visitLogMap.values()).filter(vl => vl.parkRef === store.parkStore.getPark(parkId)?.id) || [];
+    }
+
+    get allVisitLogs() {
+        return Array.from(this.visitLogMap.values());
     }
 
     setVisitLog(visitLog: VisitLog) {

@@ -6,13 +6,13 @@ import LoaderComponent from '../../../app/layout/LoaderComponent';
 import { useStore } from '../../../app/stores/store';
 import ParkDetails from '../../parks/details/ParkDetails';
 import ParkMap from '../../parks/details/ParkMap';
-import VisitLogList from '../dashboard/VisitLogList';
+import ParkVisitLogList from './ParkVisitLogList';
 
 export default observer(function VisitLogDashboard() {
     const {visitLogStore, parkStore, userStore, mapStore} = useStore();
-    const { loadVisitLogs } = visitLogStore;
-    const { getUser, setVisitedParks, isLoggedIn} = userStore;
-    const { currentPark, loadPark, clearPark } = parkStore;
+    const {loadVisitLogs } = visitLogStore;
+    const {getUser, setVisitedParks, isLoggedIn} = userStore;
+    const {currentPark, loadPark, clearPark } = parkStore;
     const {mapScriptLoaded} = mapStore;
     const { id } = useParams<{id: string}>();
 
@@ -36,7 +36,7 @@ export default observer(function VisitLogDashboard() {
         <Grid>
             <Grid.Column width={10}>
                 <ParkDetails park={currentPark}/>
-                <VisitLogList park={currentPark}/>
+                    <ParkVisitLogList park={currentPark}/>
             </Grid.Column>
             <Grid.Column width={6}>
                 {mapScriptLoaded && (

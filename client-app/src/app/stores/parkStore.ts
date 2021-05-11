@@ -10,6 +10,7 @@ export default class ParkStore {
     loadingInitial: boolean = false;
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
+    
 
     constructor() {
         makeAutoObservable(this);
@@ -89,8 +90,12 @@ export default class ParkStore {
         }
     }
 
-    //Pagination functions
-    setPagination = (pagination: Pagination) => {
+    clearPark = () => {
+        this.currentPark = undefined;
+    }
+
+     //Pagination functions
+     setPagination = (pagination: Pagination) => {
         this.pagination = pagination;
     }
 
@@ -104,7 +109,5 @@ export default class ParkStore {
         params.append('pageSize', this.pagingParams.pageSize.toString());
         return params;
     }
-    clearPark = () => {
-        this.currentPark = undefined;
-    }
+
 }

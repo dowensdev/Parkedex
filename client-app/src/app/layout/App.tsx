@@ -25,7 +25,7 @@ function App() {
     } else {
       commonStore.setAppLoaded();
     }
-  }, [commonStore, userStore])
+  }, [commonStore, userStore, visitLogStore])
 
   useEffect(() => {
     if(!mapStore.mapScriptLoaded) mapStore.loadMapApi(); 

@@ -10,7 +10,7 @@ import VisitedParksList from './VisitedParksList';
 
 export default observer(function ParkDashboard() {
     const {userStore, parkStore } = useStore();
-    const {setPagingParams, pagination, loadParks} = parkStore;
+    const {loadParks, setPagingParams, pagination} = parkStore;
     const {getUser, setVisitedParks, loadingVisitedList, isLoggedIn} = userStore;
     const [loadingNext, setLoadingNext] = useState(false);
 
@@ -21,7 +21,7 @@ export default observer(function ParkDashboard() {
     }
 
     useEffect(() => {
-        if(getUser != null) setVisitedParks(); 
+        if(getUser != null) setVisitedParks();
     }, [getUser, setVisitedParks])
 
     if (isLoggedIn && loadingVisitedList)  return <LoaderComponent content='Loading Visited Parks' />;

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { VisitLog } from '../../../app/models/visitLog';
@@ -14,8 +14,13 @@ interface Props {
 export default observer(function VisitLogDetails({visitLog}: Props) {
     const history = useHistory();
     const {modalStore, parkStore, visitLogStore} = useStore();
-    const {deleteVisitLog} = visitLogStore;
+    const {deleteVisitLog, loadingVisits} = visitLogStore;
     const {currentPark: park} = parkStore;
+
+    const [target, setTarget] = useState('');
+    function changeTargetPark(e: SyntheticEvent<HTMLButtonElement>) {
+        setTarget(e.currentTarget.name);
+    }
 
     return (
         <Segment.Group>
@@ -23,13 +28,21 @@ export default observer(function VisitLogDetails({visitLog}: Props) {
                     <Header as={Link} to={`/visitlog/${visitLog.parkRef}`} style={{marginBottom:10}}>
                         {visitLog.title}
                     </Header>
-                    <Button 
-                        onClick={() => deleteVisitLog(visitLog.id).then(() => history.push(`/visitlog/${visitLog.parkRef}`))}
+                    <Button
+                        name={visitLog.id} 
+                        loading={loadingVisits && target === visitLog.id}
+                        onClick={(e) => {
+                            changeTargetPark(e);
+                            deleteVisitLog(visitLog.id).then(() => history.push(`/visitlog/${visitLog.parkRef}`))
+                            }
+                        }
+                        color='red'
                         icon='x' 
                         floated='right'></Button>
                     <Button onClick={() =>
                         modalStore.openModal(<VisitLogForm park={park!} logId={visitLog.id} />)} 
-                        icon='edit' 
+                        icon='edit'
+                        color='blue' 
                         floated='right' />
                 </Segment>
                 <Segment secondary clearing>
