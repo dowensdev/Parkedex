@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { SyntheticEvent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Button, Container, Header, Segment } from 'semantic-ui-react';
+import { Button, Container, Header, Label, Segment } from 'semantic-ui-react';
 import { VisitLog } from '../../../app/models/visitLog';
 import {format} from 'date-fns';
 import VisitLogForm from '../form/VisitLogForm';
@@ -28,12 +28,13 @@ export default observer(function VisitLogDetails({visitLog}: Props) {
                     <Header as={Link} to={`/visitlog/${visitLog.parkRef}`} style={{marginBottom:10}}>
                         {visitLog.title}
                     </Header>
+                    
                     <Button
                         name={visitLog.id} 
                         loading={loadingVisits && target === visitLog.id}
                         onClick={(e) => {
                             changeTargetPark(e);
-                            deleteVisitLog(visitLog.id).then(() => history.push(`/visitlog/${visitLog.parkRef}`))
+                            deleteVisitLog(visitLog.id);
                             }
                         }
                         color='red'
@@ -46,6 +47,9 @@ export default observer(function VisitLogDetails({visitLog}: Props) {
                         floated='right' />
                 </Segment>
                 <Segment secondary clearing>
+                    <Label as={Link} to={`/parks/${visitLog.parkRef}`} style={{marginBottom:10}}>
+                        {visitLog.parkName}
+                    </Label>
                     <Container>Start Date: {format(visitLog.startDate!, 'dd MMM yyyy')}</Container>
                     <Container>End Date: {format(visitLog.endDate!, 'dd MMM yyyy')}</Container>
                 </Segment>

@@ -43,10 +43,10 @@ export default observer(function VisitLogForm({park, logId}: Props) {
                 parkName: park.fullName
             };
             //Need park id here
-            createVisitLog(park.id, newVisitLog).then(() => history.push(`/visitlog/${newVisitLog.parkRef}`))
+            createVisitLog(park.id, newVisitLog)
                 .finally(() => modalStore.closeModal());
         } else {
-            editVisitLog(visitLog).then(() => history.push(`/visitlog/${visitLog.parkRef}`))
+            editVisitLog(visitLog)
                 .finally(() => modalStore.closeModal());
         }
     }

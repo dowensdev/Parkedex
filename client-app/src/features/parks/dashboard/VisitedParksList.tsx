@@ -7,11 +7,11 @@ import { useStore } from '../../../app/stores/store';
 
 export default observer(function VisitedParksList() {
     const {userStore} = useStore();
-    const {allVisited} = userStore;
+    const {visitedParksMap, allVisited} = userStore;
 
     return (
         <>
-            {allVisited.length > 0 ? 
+            {visitedParksMap.size > 0 ? 
                 <Menu style={{marginLeft:10}} vertical borderless>
                     <Header content='Visited Parks' textAlign='center' style={{marginTop:10}} />
                     {allVisited.map((park) => (

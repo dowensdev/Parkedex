@@ -23,7 +23,10 @@ export default class UserStore {
         try{
             const user = await agent.Users.login(creds);
             store.commonStore.setToken(user.token);
-            runInAction(() => this.user = user);
+            runInAction(() => {
+                this.user = user;
+                this.setVisitedParks();
+            })
             history.push('/parks');
             store.modalStore.closeModal();
         } catch(error) {
@@ -35,6 +38,7 @@ export default class UserStore {
         store.commonStore.setToken(null);
         window.localStorage.removeItem('jwt');
         this.user = null;
+        this.visitedParksMap.clear();
         history.push('/');
     }
 

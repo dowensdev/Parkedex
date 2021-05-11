@@ -1,6 +1,5 @@
 ﻿using Application.Core;
 using Application.Core.Interfaces;
-using Application.ImageReferences;
 using Domain;
 using FluentValidation;
 using MediatR;
