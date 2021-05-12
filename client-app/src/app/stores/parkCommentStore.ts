@@ -15,7 +15,7 @@ export default class ParkCommentStore {
     createHubConnection = (parkId: string) => {
         if(store.parkStore.currentPark) {
             this.hubConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:44338/parkcomments?parkId=' + parkId, {
+            .withUrl(process.env.REACT_APP_CHAT_URL + '?parkId=' + parkId, {
                 accessTokenFactory: () => store.userStore.user?.token!
             })
             .withAutomaticReconnect()

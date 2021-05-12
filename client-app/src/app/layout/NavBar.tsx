@@ -18,10 +18,13 @@ export default observer(function NavBar() {
                 </Menu.Item>
                 {isLoggedIn ? (
                     <>
+                        <Menu.Item as={Link} to={`/profile/${user?.displayName}`}>
+                            My Visits
+                        </Menu.Item> 
                         <Menu.Item position='right'>
                             <Dropdown position='right' pointing='top left' text={user!.displayName}>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item as={Link} to={`/profiles/${user?.username}`} 
+                                    <Dropdown.Item as={Link} to={`/profile/${user?.displayName}`} 
                                         text='My Profile' icon='user' />
                                     <Dropdown.Item onClick={logout} text='Logout' icon='power' />
                                 </Dropdown.Menu>

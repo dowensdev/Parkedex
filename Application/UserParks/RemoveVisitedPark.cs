@@ -3,9 +3,6 @@ using Application.Core.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,16 +28,21 @@ namespace Application.UserParks
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _db.Users.Include(vp => vp.ParksVisited)
-                    .FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+                var user = await _db.Users.FirstOrDefaultAsync(x =>
+                    x.UserName == _userAccessor.GetUsername());
+                var park = await _db.Parks.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-                var visitedParkToRemove = user.ParksVisited.FirstOrDefault(x => x.ParkId == request.Id);
-                if (visitedParkToRemove == null) return null;
-
-                user.ParksVisited.Remove(visitedParkToRemove);
+                var visitedPark = await _db.VisitedParks.FindAsync(user.Id, park.Id);
+                if (visitedPark != null)
+                {
+                    _db.VisitedParks.Remove(visitedPark);
+                } else
+                {
+                    return null;
+                }
 
                 var result = await _db.SaveChangesAsync() > 0;
-                if (!result) return Result<Unit>.Failure("Failed to delete Park");
+                if (!result) return Result<Unit>.Failure("Failed to delete park from list of visited parks.");
                 return Result<Unit>.Success(Unit.Value);
             }
         }

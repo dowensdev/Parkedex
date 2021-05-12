@@ -23,7 +23,10 @@ export default class UserStore {
         try{
             const user = await agent.Users.login(creds);
             store.commonStore.setToken(user.token);
-            runInAction(() => this.user = user);
+            runInAction(() => {
+                this.user = user;
+                this.setVisitedParks();
+            })
             history.push('/parks');
             store.modalStore.closeModal();
         } catch(error) {
@@ -35,6 +38,7 @@ export default class UserStore {
         store.commonStore.setToken(null);
         window.localStorage.removeItem('jwt');
         this.user = null;
+        this.visitedParksMap.clear();
         history.push('/');
     }
 
@@ -70,7 +74,7 @@ export default class UserStore {
 
     setVisitedParks = async () => {
         this.setLoadingVisited(true);
-        if(this.user) {
+        if(store.userStore.user) {
             try{
                 const visitedParks = await agent.VisitedParks.getVisited();
                 runInAction(() => {
@@ -89,11 +93,12 @@ export default class UserStore {
 
     addVisitedPark = async (park: Park) => {
         this.loadingButtons = true;
-        if(this.user && !this.hasVisited(park.id)) {
+        if(store.userStore.user && !this.hasVisited(park.id)) {
             try {
                 await agent.VisitedParks.addVisited(park.id)
                 runInAction(() => {
                     this.visitedParksMap.set(park.id, park.fullName);
+                    park.visitorCount++;
                     this.loadingButtons = false;
                 })
             } catch(error) {
@@ -109,6 +114,7 @@ export default class UserStore {
             await agent.VisitedParks.removeVisited(park.id)
             runInAction(() => {
                 this.visitedParksMap.delete(park.id);
+                park.visitorCount--;
                 this.loadingButtons = false;
             })
         } catch(error) {

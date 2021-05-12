@@ -11,7 +11,7 @@ body {
 }
 
 .ui.borderless.menu {
-  background: #5C9980;
+  background: #EAEAEA;
 }
 
 .ui.segment {
@@ -65,4 +65,14 @@ body {
 .masthead h2 {
   font-size: 1.7em;
   font-weight: normal;
+}
+
+.react-calendar {
+  width: 100%;
+  border: none;
+  box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
 }

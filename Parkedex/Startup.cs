@@ -1,24 +1,11 @@
 using API.Extensions;
-using Application.Core.Interfaces;
-using Application.Core.Mappings;
 using Application.Parks;
-using Infrastucture.Persistence;
-using MediatR;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -56,6 +43,7 @@ namespace Parkedex
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
+                        .WithExposedHeaders("Pagination")
                         .WithOrigins("http://localhost:3000");
                 });
             });
@@ -76,9 +64,12 @@ namespace Parkedex
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Parkedex v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseCors("CorsPolicy");
 
@@ -89,6 +80,7 @@ namespace Parkedex
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ParkCommentHub>("/parkcomments");
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }

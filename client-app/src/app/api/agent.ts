@@ -4,6 +4,8 @@ import { User, UserFormValues } from '../models/user';
 import { store } from '../stores/store';
 import { history } from '../..'
 import { VisitedPark } from '../models/visitedPark';
+import { PaginatedResult } from '../models/pagination';
+import { VisitLog, VisitLogFormValues } from '../models/visitLog';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -11,7 +13,7 @@ const sleep = (delay: number) => {
     })
 }
 
-axios.defaults.baseURL = 'https://localhost:44338/api';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 //Sending token up with requests to API
 axios.interceptors.request.use(config => {
@@ -21,7 +23,12 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(async response => {
-    await sleep(1000);
+    if(process.env.NODE_ENV === 'development') await sleep(1000);
+    const pagination = response.headers['pagination'];
+    if(pagination) {
+        response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+        return response as AxiosResponse<PaginatedResult<any>>
+    }
     return response;
     }, (error: AxiosError) => {
     const{data, status, config} = error.response!;
@@ -51,6 +58,7 @@ axios.interceptors.response.use(async response => {
             break;
         case 500:
             store.commonStore.setServerError(data);
+            console.log(data);
             history.push('/server-error');
             break;
     }
@@ -67,14 +75,23 @@ const requests = {
 }
 
 const Parks = {
-    getAll: () => requests.get<Park[]>('/parks'),
+    getAll: (params: URLSearchParams) => axios.get<PaginatedResult<Park[]>>('/parks', {params})
+        .then(data),
     get: (id: string) => requests.get<Park>(`/parks/${id}`)
 }
 
 const VisitedParks = {
-    getVisited: () => requests.get<VisitedPark[]>('/UserParks/'),
-    addVisited: (id: string) => requests.put<void>(`/UserParks/${id}`, {}),
-    removeVisited: (id: string) => requests.del<void>(`/UserParks/${id}`)
+    getVisited: () => requests.get<VisitedPark[]>('/userparks/'),
+    addVisited: (id: string) => requests.put<void>(`/userparks/${id}`, {}),
+    removeVisited: (id: string) => requests.del<void>(`/userparks/${id}`)
+}
+
+const VisitLogs = {
+    getVisitLogs: () => requests.get<VisitLog[]>('/visitlog/'),
+    getVisitLog: (id: string) => requests.get<VisitLog>(`/visitlog/${id}`),
+    addVisitLog: (parkId: string, visitLog: VisitLogFormValues) => requests.post<VisitLog>(`/visitlog/${parkId}`, visitLog),
+    editVisitLog: (visitLog: VisitLogFormValues) => requests.put<VisitLog>(`/visitlog/${visitLog.id}`, visitLog),
+    removeVisitLog: (id: string) => requests.del<void>(`/visitlog/${id}`)
 }
 
 const Users = {
@@ -86,7 +103,8 @@ const Users = {
 const agent = {
     Parks,
     Users,
-    VisitedParks
+    VisitedParks,
+    VisitLogs,
 }
 
 export default agent;

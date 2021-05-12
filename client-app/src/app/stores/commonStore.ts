@@ -32,4 +32,6 @@ export default class CommonStore {
     setAppLoaded = () => {
         this.appLoaded = true;
     }
+
+   
 }
