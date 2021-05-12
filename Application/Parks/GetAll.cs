@@ -30,6 +30,7 @@ namespace Application.Parks
             public async Task<Result<PagedList<ParkDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var query = _db.Parks
+                    .OrderBy(fn => fn.FullName)
                     .ProjectTo<ParkDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();
 

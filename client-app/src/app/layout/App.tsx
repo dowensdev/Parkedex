@@ -7,12 +7,12 @@ import ParkDashboard from '../../features/parks/dashboard/ParkDashboard';
 import ParkDetailDashboard from '../../features/parks/details/ParkDetailDashboard';
 import ProfileDashboard from '../../features/profiles/ProfileDashboard';
 import SplashPage from '../../features/splash/SplashPage';
-import LoginForm from '../../features/users/LoginForm';
 import VisitLogDashboard from '../../features/visits/dashboard/VisitLogDashboard';
 import ModalContainer from '../common/modals/ModalContainer';
 import { useStore } from '../stores/store';
 import LoaderComponent from './LoaderComponent';
 import NavBar from './NavBar';
+import PrivateRoute from './PrivateRoute';
 
 function App() {
   const {commonStore, userStore, mapStore, visitLogStore} = useStore();
@@ -46,9 +46,8 @@ function App() {
               <Container style={{ marginTop: '7em' }}>
                 <Route exact path='/parks' component={ParkDashboard} />
                 <Route path='/parks/:id' component ={ParkDetailDashboard} />
-                <Route path='/visitlog/:id' component ={VisitLogDashboard} />
-                <Route path='/login' component={LoginForm} />
-                <Route path='/profile/:username' component={ProfileDashboard} />
+                <PrivateRoute path='/visitlog/:id' component ={VisitLogDashboard} />
+                <PrivateRoute path='/profile/:username' component={ProfileDashboard} />
                 <Route path='/server-error' component={ServerError} />
               </Container>
             </>

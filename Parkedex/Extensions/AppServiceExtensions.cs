@@ -16,8 +16,8 @@ namespace API.Extensions
         public static IServiceCollection AddAppServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                config.GetConnectionString("DefaultConnection")
+                options.UseNpgsql(
+                    config.GetConnectionString("DefaultConnection")
                 )
             );
 

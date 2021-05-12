@@ -64,9 +64,12 @@ namespace Parkedex
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Parkedex v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseCors("CorsPolicy");
 
@@ -77,6 +80,7 @@ namespace Parkedex
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ParkCommentHub>("/parkcomments");
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }

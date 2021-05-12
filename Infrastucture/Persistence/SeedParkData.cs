@@ -21,7 +21,10 @@ namespace Infrastucture.Persistence
             foreach (KeyValuePair<string, Park> park in parkDict)
             {
                 parksList.Add(park.Value);
+                
             }
+
+            parksList.Sort((x, y) => x.FullName.CompareTo(y.FullName));
 
             await db.Parks.AddRangeAsync(parksList);
             await db.SaveChangesAsync();

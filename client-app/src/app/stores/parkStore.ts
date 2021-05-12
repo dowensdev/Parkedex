@@ -63,7 +63,7 @@ export default class ParkStore {
     }
 
     get allParks() {
-        return Array.from(this.allParkMap);
+        return Array.from(this.allParkMap)
     }
 
     getPark = (id: string) => {

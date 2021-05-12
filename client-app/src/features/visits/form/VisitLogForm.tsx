@@ -26,9 +26,9 @@ export default observer(function VisitLogForm({park, logId}: Props) {
 
     const validationSchema = Yup.object({
         title: Yup.string().required('The visit title is required'),
-        startDate: Yup.string().required('The start date is required'),
-        endDate: Yup.string().required('The end date is required'),
-    })
+        startDate: Yup.date().required('The start date is required'),
+        endDate: Yup.date().min(Yup.ref('startDate'), "End date can not be before Start date"),
+    });
 
     useEffect(() => {
         if (logId !== 'create') loadVisitLog(logId).then(visitLog => setVisitLog(new VisitLogFormValues(visitLog)))
@@ -67,15 +67,15 @@ export default observer(function VisitLogForm({park, logId}: Props) {
                             placeholderText='Start Date'  
                             name='startDate' 
                             showFullMonthYearPicker
-                            dateFormat='MMMM d, yyyy h:mm aa'
+                            dateFormat='MMMM d, yyyy'
                         />
                         <AppDateInput 
                             placeholderText='End Date'  
                             name='endDate' 
                             showFullMonthYearPicker
-                            dateFormat='MMMM d, yyyy h:mm aa'
+                            dateFormat='MMMM d, yyyy'
                         />
-                        <AppTextArea rows={5} placeholder='Visit Notes' name='notes' />
+                        <AppTextArea rows={5} placeholder='Notes' name='notes' />
                         <Button 
                             disabled={isSubmitting || !dirty || !isValid}
                             loading={isSubmitting} floated='right' 

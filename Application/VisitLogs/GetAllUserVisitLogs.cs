@@ -32,6 +32,7 @@ namespace Application.VisitLogs
             public async Task<Result<List<VisitLogDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var visitLogs = await _db.VisitLogs.Where(x => x.AppUser.UserName == _userAccessor.GetUsername())
+                    .OrderByDescending(ed => ed.EndDate)
                     .ProjectTo<VisitLogDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 
