@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,9 +14,14 @@ namespace Infrastucture.Persistence
         {
             if (db.Parks.Any()) return;
 
+            var path = Environment.CurrentDirectory; 
+            path = path.Remove(path.Length - 10, 9);
+            path = path + "\\Infrastucture\\Files\\np_short.json";
+            Console.WriteLine(path);
+
             Dictionary<string, Park> parkDict = new Dictionary<string, Park>();
             List<Park> parksList = new List<Park>();
-            var text = File.ReadAllText(@"C:\Users\DerekOwens\source\repos\Parkedex\Infrastucture\Files\np_short.json");
+            var text = File.ReadAllText(@path);
             parkDict = JsonConvert.DeserializeObject<Dictionary<string, Park>>(text);
 
             foreach (KeyValuePair<string, Park> park in parkDict)
