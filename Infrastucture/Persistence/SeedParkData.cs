@@ -12,7 +12,7 @@ namespace Infrastucture.Persistence
     {
         public static async Task Seed(ApplicationDbContext db)
         {
-            if (db.Parks.Any()) return;
+            //if (db.Parks.Any()) return;
 
             var path = Environment.CurrentDirectory; 
             path = path.Remove(path.Length - 10, 9);
