@@ -9,7 +9,6 @@ National Park Tracker and Information
 * [AutoMapper](https://automapper.org/)
 * [FluentValidation](https://fluentvalidation.net/)
 * [PostgreSQL](https://www.postgresql.org/)
-* [Docker](https://www.docker.com/)
 
 ## APIs
 * [National Park API](https://www.nps.gov/subjects/developer/api-documentation.htm)
