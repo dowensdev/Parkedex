@@ -1,5 +1,5 @@
 # Parkedex
-https://parkedex.herokuapp.com/parks
+https://parkedex.herokuapp.com
 
 National Park Tracker and Information
 
