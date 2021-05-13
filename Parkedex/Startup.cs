@@ -74,7 +74,11 @@ namespace Parkedex
                     "https://fonts.gstatic.com", "data:"))
                 .FormActions(s => s.Self())
                 .FrameAncestors(s => s.Self())
-                .ImageSources(s => s.Self().CustomSources("https://www.nps.gov", "data:"))
+                .ImageSources(s => s.Self().CustomSources("https://www.nps.gov", 
+                    "data:", 
+                    "https://maps.google",
+                    "https://maps.googleapis.com",
+                    "https://maps.gstatic.com"))
                 .ScriptSources(s => s.Self().CustomSources("https://maps.googleapis.com", 
                     "sha256-Ur/vN+xGABZWplMg3T4Se7d+O3AzlX1aoqG+Rs4/5NQ="))
             );
