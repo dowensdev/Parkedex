@@ -17,7 +17,6 @@ namespace Infrastucture.Persistence
             var path = Environment.CurrentDirectory; 
             path = path.Remove(path.Length - 10, 9);
             path = path + "\\Infrastucture\\Files\\np_short.json";
-            Console.WriteLine(path);
 
             Dictionary<string, Park> parkDict = new Dictionary<string, Park>();
             List<Park> parksList = new List<Park>();
