@@ -10,6 +10,7 @@ export default class UserStore {
     visitedParksMap = new Map<string, string>();
     loadingVisitedList: boolean = false;
     loadingButtons: boolean = false;
+    refreshTokenTimeout: any;
 
     constructor() {
         makeAutoObservable(this);
@@ -23,6 +24,7 @@ export default class UserStore {
         try{
             const user = await agent.Users.login(creds);
             store.commonStore.setToken(user.token);
+            this.startRefreshTokenTimer(user);
             runInAction(() => {
                 this.user = user;
                 this.setVisitedParks();
@@ -45,24 +47,50 @@ export default class UserStore {
     getUser = async () => {
         try {
             const user = await agent.Users.current();
+            store.commonStore.setToken(user.token);
             runInAction(() => this.user = user);
+            this.startRefreshTokenTimer(user);
         } catch(error) {
             console.log(error);
         }
     }
 
     register = async (creds: UserFormValues) => {
-        
         try{
             const user = await agent.Users.register(creds);
             store.commonStore.setToken(user.token);
             runInAction(() => this.user = user);
+            this.startRefreshTokenTimer(user);
             history.push('/parks');
             store.modalStore.closeModal();
         } catch(error) {
             throw error;
         }
     }
+
+    refreshToken = async () => {
+        this.stopRefreshTokenTimer();
+        try {
+            const user = await agent.Users.refreshToken();
+            runInAction(() => this.user = user);
+            store.commonStore.setToken(user.token);
+            this.startRefreshTokenTimer(user);
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    private startRefreshTokenTimer(user: User) {
+        const jwtToken = JSON.parse(atob(user.token.split('.')[1]));
+        const expires = new Date(jwtToken.exp * 1000);
+        const timeout = expires.getTime() - Date.now() - (60 * 1000);
+        this.refreshTokenTimeout = setTimeout(this.refreshToken, timeout);
+    }
+
+    private stopRefreshTokenTimer() {
+        clearTimeout(this.refreshTokenTimeout);
+    }
+
 
     get allVisited() {
         return Array.from(this.visitedParksMap).sort((a, b) => a[1].localeCompare(b[1]));
