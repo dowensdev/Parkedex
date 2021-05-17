@@ -50,6 +50,7 @@ axios.interceptors.response.use(async response => {
                 throw modalStateErrors.flat();
             }
             break;
+        //error capture for token timeout
         case 401:
             if(status === 401 && headers['www-authenticate'].startsWith('Bearer error="invalid_token"')) {
                 store.userStore.logout();
@@ -61,6 +62,7 @@ axios.interceptors.response.use(async response => {
             console.log("unauthorized")
             history.push('/not-found')
             break;
+        //server errors capture formatted for better readability and logs to console, goes to default server error page 
         case 500:
             store.commonStore.setServerError(data);
             console.log(data);
@@ -82,7 +84,7 @@ const requests = {
 const Parks = {
     getAll: (params: URLSearchParams) => axios.get<PaginatedResult<Park[]>>('/parks', {params})
         .then(data),
-    get: (id: string) => requests.get<Park>(`/parks/${id}`)
+    get: (id: string) => requests.get<Park>(`/parks/${id}`),
 }
 
 const VisitedParks = {

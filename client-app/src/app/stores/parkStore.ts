@@ -10,6 +10,7 @@ export default class ParkStore {
     loadingInitial: boolean = false;
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
+    parkSearch: string = '';
     
 
     constructor() {
@@ -25,6 +26,7 @@ export default class ParkStore {
         this.setLoadingInitial(true);
         try {
             const result = await agent.Parks.getAll(this.axiosParams);
+            console.log(result);
             result.data.forEach(park => {
                this.setPark(park);
             })
@@ -107,7 +109,19 @@ export default class ParkStore {
         const params = new URLSearchParams();
         params.append('pageNumber', this.pagingParams.pageNumber.toString());
         params.append('pageSize', this.pagingParams.pageSize.toString());
+        params.append('search', this.parkSearch.toString());
         return params;
     }
 
+    //search functions
+    getParkSearchResults = () => {
+        this.allParkMap.clear();
+        this.pagingParams.pageNumber = 1;
+        this.loadParks();
+    }
+
+    setParkSearch = (input: string) => {
+        this.parkSearch = input;
+        console.log(this.parkSearch);
+    }
 }

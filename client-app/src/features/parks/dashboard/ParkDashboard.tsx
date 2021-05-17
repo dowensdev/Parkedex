@@ -2,10 +2,12 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroller';
 import { Grid, Loader } from 'semantic-ui-react'
+import Search from '../../../app/common/search/Search';
 import LoaderComponent from '../../../app/layout/LoaderComponent';
 import { PagingParams } from '../../../app/models/pagination';
 import { useStore } from '../../../app/stores/store';
 import AllParksList from './AllParksList';
+import ParkItemPlaceholder from './ParkItemPlaceholder';
 import VisitedParksList from './VisitedParksList';
 
 export default observer(function ParkDashboard() {
@@ -24,12 +26,20 @@ export default observer(function ParkDashboard() {
         if(getUser != null) setVisitedParks();
     }, [getUser, setVisitedParks])
 
+
     if (isLoggedIn && loadingVisitedList)  return <LoaderComponent content='Loading Visited Parks' />;
 
     return (
         <>
             <Grid>
                 <Grid.Column width='11'>
+                <Search />
+                {parkStore.loadingInitial && !loadingNext ? (
+                    <>
+                        <ParkItemPlaceholder />
+                        <ParkItemPlaceholder />
+                    </>
+                ) : (
                     <InfiniteScroll
                         pageStart={0}
                         loadMore={handleGetNext}
@@ -38,6 +48,7 @@ export default observer(function ParkDashboard() {
                     >
                         <AllParksList />
                     </InfiniteScroll>
+                )}
                 </Grid.Column>
                 <Grid.Column width='5'>
                     <VisitedParksList />

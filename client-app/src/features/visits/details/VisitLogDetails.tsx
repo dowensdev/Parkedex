@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { SyntheticEvent, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Container, Header, Label, Segment } from 'semantic-ui-react';
 import { VisitLog } from '../../../app/models/visitLog';
 import {format} from 'date-fns';
@@ -12,7 +12,6 @@ interface Props {
 }
 
 export default observer(function VisitLogDetails({visitLog}: Props) {
-    const history = useHistory();
     const {modalStore, parkStore, visitLogStore} = useStore();
     const {deleteVisitLog, loadingVisits} = visitLogStore;
     const {currentPark: park} = parkStore;

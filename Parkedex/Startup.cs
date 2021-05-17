@@ -79,8 +79,8 @@ namespace Parkedex
                     "https://maps.google",
                     "https://maps.googleapis.com",
                     "https://maps.gstatic.com"))
-                .ScriptSources(s => s.Self().CustomSources("https://maps.googleapis.com", 
-                    "sha256-Ur/vN+xGABZWplMg3T4Se7d+O3AzlX1aoqG+Rs4/5NQ="))
+                .ScriptSources(s => s.Self().CustomSources("https://maps.googleapis.com",
+                    "sha256-72h5S9xBq56pEjbqlI/v2T62hIzuQ2dKfnHHeEchNCA="))
             );
 
             if (env.IsDevelopment())

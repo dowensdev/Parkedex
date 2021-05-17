@@ -17,6 +17,8 @@ import PrivateRoute from './PrivateRoute';
 function App() {
   const {commonStore, userStore, mapStore, visitLogStore} = useStore();
 
+  //if token exists attempts to get user info. If successfully loads visited parks list
+  //then loads all visit logs and then opens app
   useEffect(() => {
     if (commonStore.token) { 
         userStore.getUser().then(() => userStore.setVisitedParks())
@@ -27,6 +29,7 @@ function App() {
     }
   }, [commonStore, userStore, visitLogStore])
 
+  //checks if map script appears in root html and if not loads helper function from map store
   useEffect(() => {
     if(!mapStore.mapScriptLoaded) mapStore.loadMapApi(); 
   }, [mapStore])

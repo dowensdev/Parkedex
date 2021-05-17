@@ -30,9 +30,14 @@ namespace Application.Parks
             public async Task<Result<PagedList<ParkDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var query = _db.Parks
-                    .OrderBy(fn => fn.FullName)
-                    .ProjectTo<ParkDto>(_mapper.ConfigurationProvider)
-                    .AsQueryable();
+                        .OrderBy(fn => fn.FullName)
+                        .ProjectTo<ParkDto>(_mapper.ConfigurationProvider)
+                        .AsQueryable();
+
+                if (request.Params.Search != null && request.Params.Search.Length > 0)
+                {
+                    query = query.Where(p => p.FullName.ToLower().Contains(request.Params.Search.ToLower()));
+                }
 
                 return Result<PagedList<ParkDto>>.Success(
                     await PagedList<ParkDto>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize)     

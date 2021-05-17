@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import Search from '../../../app/common/search/Search';
 import { useStore } from '../../../app/stores/store';
 import ParkDetails from '../details/ParkDetails';
 
