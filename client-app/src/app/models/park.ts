@@ -1,5 +1,4 @@
 import { ImageRef } from './imageref'
-import { User } from './user';
 
 export interface Park {
     id: string, 

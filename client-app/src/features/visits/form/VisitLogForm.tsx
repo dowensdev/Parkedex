@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Header, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
@@ -18,7 +18,6 @@ interface Props {
 }
 
 export default observer(function VisitLogForm({park, logId}: Props) {
-    const history = useHistory();
     const { visitLogStore, modalStore } = useStore();
     const { createVisitLog, editVisitLog, loadVisitLog } = visitLogStore;
 

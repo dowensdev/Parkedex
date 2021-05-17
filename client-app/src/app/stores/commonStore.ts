@@ -5,6 +5,7 @@ export default class CommonStore {
     error: ServerError | null = null;
     token: string | null = window.localStorage.getItem('jwt');
     appLoaded = false;
+    searchTimeout: any;
     
     constructor() {
         makeAutoObservable(this);
@@ -32,6 +33,4 @@ export default class CommonStore {
     setAppLoaded = () => {
         this.appLoaded = true;
     }
-
-   
 }

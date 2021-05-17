@@ -3,15 +3,13 @@ import React from 'react';
 import { Grid, Header, Item, Segment, Statistic } from 'semantic-ui-react';
 import { User } from '../../app/models/user';
 import { useStore } from '../../app/stores/store';
-import userStore from '../../app/stores/userStore';
 
 interface Props {
     user: User;
 }
 
 export default observer(function ProfileHeader({user}: Props) {
-    const {userStore, parkStore} = useStore();
-    const {allParkMap} = parkStore;
+    const {userStore} = useStore();
     const {allVisited} = userStore;
 
     return (

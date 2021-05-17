@@ -22,7 +22,7 @@ export default observer(function ParkDetails({park}: Props) {
     }
 
     return (
-        <Segment.Group key={park.id}>
+        <Segment.Group key={park.id} style={{marginTop: 10}}>
             <Segment>
                 <Item.Group>
                     <Item>

@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import { useStore } from '../../app/stores/store';
 import AllVisitLogList from '../visits/AllVisitLogList';

@@ -11,6 +11,7 @@ namespace Application.Core
         private const int MaxPageSize = 30;
         public int PageNumber { get; set; } = 1;
         private int _pageSize = 10;
+        public string Search { get; set; } = "";
 
         public int PageSize
         {
