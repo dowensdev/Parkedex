@@ -59,6 +59,13 @@ namespace Infrastucture.Persistence
                 .HasMany(vl => vl.VisitLogs)
                 .WithOne(u => u.AppUser)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            //One to many appuser to refreshtokens relationship
+            modelBuilder.Entity<AppUser>()
+                .HasMany(rt => rt.RefreshTokens)
+                .WithOne(u => u.AppUser)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

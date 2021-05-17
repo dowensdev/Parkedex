@@ -1,4 +1,4 @@
-import { ImageRef } from './imageRef'
+import { ImageRef } from './imageref'
 import { User } from './user';
 
 export interface Park {

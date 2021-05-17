@@ -31,11 +31,11 @@ axios.interceptors.response.use(async response => {
     }
     return response;
     }, (error: AxiosError) => {
-    const{data, status, config} = error.response!;
+    const{data, status, config, headers} = error.response!;
     switch(status) {
         case 400:
             if(typeof data === 'string') {
-                //toast.error(data);
+                console.log(data)
             }
             if(config.method === 'get' && data.errors.hasOwnProperty('id')) {
                 history.push('not-found');
@@ -51,9 +51,14 @@ axios.interceptors.response.use(async response => {
             }
             break;
         case 401:
-            //toast.error('unauthorised');
+            if(status === 401 && headers['www-authenticate'].startsWith('Bearer error="invalid_token"')) {
+                store.userStore.logout();
+                console.log('session expired - please login again');
+            }
+            console.log("unauthorized")
             break;
         case 404:
+            console.log("unauthorized")
             history.push('/not-found')
             break;
         case 500:
@@ -98,6 +103,7 @@ const Users = {
     current: () => requests.get<User>('/user'),
     login: (user: UserFormValues) => requests.post<User>('/user/login', user),
     register: (user: UserFormValues) => requests.post<User>('/user/register', user),
+    refreshToken: () => requests.post<User>('/user/refreshToken', {})
 }
 
 const agent = {
